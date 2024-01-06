@@ -6,7 +6,6 @@ export const PacksList = () => {
     <div>
       <PackFilters switcherLabel={'Show packs cards'} sliderLabel={'Number of cards'}/>
       <PackTable/>
-
     </div>
   )
 }
