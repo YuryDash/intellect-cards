@@ -7,10 +7,10 @@ button {
   white-space: nowrap;
   display: flex;
 }
-.list [data-state=active] {
+.list [data-state='active'] {
   background-color: var(--color-accent-500);
 }
-.list [data-state=active]:hover {
+.list [data-state='active']:hover {
   color: var(--color-light-100);
   background-color: var(--color-accent-500);
 }

@@ -24,7 +24,13 @@ export const Dropdown = forwardRef<ElementRef<typeof Content>, DropdownProps>(
 
     return (
       <Root defaultOpen onOpenChange={setOpen} open={open}>
-        <Trigger asChild>{trigger ?? <span><MoreOptionsIcon /></span>}</Trigger>
+        <Trigger asChild>
+          {trigger ?? (
+            <span>
+              <MoreOptionsIcon />
+            </span>
+          )}
+        </Trigger>
         {open && (
           <Portal forceMount>
             <Content

@@ -1,5 +1,5 @@
-import {Meta, StoryObj} from '@storybook/react'
-import {PacksList} from "@/feature/packs-list/packs-list";
+import { PacksList } from '@/feature/packs-list/packs-list'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: PacksList,
@@ -11,7 +11,5 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-
-  },
+  args: {},
 }

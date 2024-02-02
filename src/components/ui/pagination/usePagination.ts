@@ -23,7 +23,7 @@ export const usePagination = ({
     const leftSiblingIndex = Math.max(currentPage - siblingsCount, 1)
     const rightSiblingIndex = Math.min(currentPage + siblingsCount, totalPageCount)
     // these are the page numbers to the left and right of the one you are currently on.
-      // if current 5 (leftSiblingIndex===4) (rightSiblingIndex==6)
+    // if current 5 (leftSiblingIndex===4) (rightSiblingIndex==6)
 
     const shouldShowLeftDots = leftSiblingIndex > 2
     const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2

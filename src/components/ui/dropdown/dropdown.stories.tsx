@@ -1,13 +1,12 @@
-import {ThrashIcon, ProfileAvatarIcon, PlayIcon, LogOutIcon, EditIcon} from '@/icons'
-
-import {Avatar} from '@/components/ui/avatar'
-import {Dropdown} from '@/components/ui/dropdown/dropdown'
-import {DropdownWithAvatar} from '@/components/ui/dropdown/dropdown-avatar/dropdown-avatar'
+import { Avatar } from '@/components/ui/avatar'
+import { Dropdown } from '@/components/ui/dropdown/dropdown'
+import { DropdownWithAvatar } from '@/components/ui/dropdown/dropdown-avatar/dropdown-avatar'
 import {
   DropdownItem,
   DropdownItemWithIcon,
 } from '@/components/ui/dropdown/dropdown-item/dropdown-items'
-import {Meta, StoryObj} from '@storybook/react'
+import { EditIcon, LogOutIcon, PlayIcon, ProfileAvatarIcon, ThrashIcon } from '@/icons'
+import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
   component: Dropdown,
@@ -22,9 +21,9 @@ export const WithAvatar: Story = {
   args: {
     children: (
       <>
-        <DropdownItemWithIcon icon={<PlayIcon/>} label={'Learn'}/>
-        <DropdownItemWithIcon icon={<EditIcon/>} label={'Edit'}/>
-        <DropdownItemWithIcon icon={<ThrashIcon/>} label={'Delete'}/>
+        <DropdownItemWithIcon icon={<PlayIcon />} label={'Learn'} />
+        <DropdownItemWithIcon icon={<EditIcon />} label={'Edit'} />
+        <DropdownItemWithIcon icon={<ThrashIcon />} label={'Delete'} />
       </>
     ),
     trigger: (
@@ -48,8 +47,8 @@ export const WithoutAvatar: Story = {
             name={'Ivan'}
           />
         </DropdownItem>
-        <DropdownItemWithIcon icon={<ProfileAvatarIcon/>} label={'My Profile'}/>
-        <DropdownItemWithIcon icon={<LogOutIcon/>} label={'Sign Out'}/>
+        <DropdownItemWithIcon icon={<ProfileAvatarIcon />} label={'My Profile'} />
+        <DropdownItemWithIcon icon={<LogOutIcon />} label={'Sign Out'} />
       </>
     ),
   },
