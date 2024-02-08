@@ -1,0 +1,12 @@
+.container {
+  .filtersBody {
+    display: flex;
+    align-items: end;
+  }
+
+  .centeredIcons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}
