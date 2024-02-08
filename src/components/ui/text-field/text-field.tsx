@@ -1,14 +1,16 @@
 import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { CloseIcon } from '@/icons'
 import { EyeIcon } from '@/icons/icon-components/eye-icon'
 import { EyeOffIcon } from '@/icons/icon-components/eye-off-icon'
 import { SearchIcon } from '@/icons/icon-components/search-icon'
+import { setSearchQuery } from '@/services/decks/decks.slice'
 import clsx from 'clsx'
 
 import s from './text-field.module.scss'
 
-type OwnProps = {
+export type OwnProps = {
   disabled?: boolean
   errorMessage?: string
   isModal?: boolean
@@ -18,7 +20,7 @@ type OwnProps = {
   textValue?: string
   type?: string
 }
-type TextFieldProps = OwnProps & Omit<ComponentPropsWithoutRef<'input'>, keyof OwnProps>
+export type TextFieldProps = OwnProps & Omit<ComponentPropsWithoutRef<'input'>, keyof OwnProps>
 
 export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
   (
@@ -36,6 +38,7 @@ export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
     },
     ref
   ) => {
+    const dispatch = useDispatch()
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [currentValue, setCurrentValue] = useState<string | undefined>(textValue)
     const isPasswordButtonShow = type === 'password'
@@ -64,6 +67,7 @@ export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
     }
 
     const onCloseClickHandler = () => {
+      dispatch(setSearchQuery({ value: '' }))
       setCurrentValue('')
     }
 
@@ -75,7 +79,7 @@ export const TextField = forwardRef<ElementRef<'input'>, TextFieldProps>(
             className={classNames.field}
             disabled={disabled}
             onChange={onChangeHandler}
-            placeholder={errorMessage ? errorMessage : placeholder}
+            placeholder={placeholder}
             ref={ref}
             type={showPassword ? 'text' : type}
             value={currentValue}

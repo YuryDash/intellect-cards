@@ -1,29 +1,33 @@
-import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
-import userAvatar from '@/assets/userAvatar.png'
 import { Button } from '@/components/ui/button'
+import { Dropdown } from '@/components/ui/dropdown'
+import { Typography } from '@/components/ui/typography'
 import { Logo } from '@/icons/icon-components/logo'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 
 import s from './header.module.scss'
-type HeaderProps = {
-  isAuth: boolean
-}
-export const Header: FC<HeaderProps> = props => {
-  const { isAuth } = props
+
+export const Header = () => {
+  const { data } = useGetMeQuery()
 
   return (
-    <div className={s.root}>
+    <header className={s.root}>
       <div className={s.headerContainer}>
-        <Logo />
-        {isAuth ? (
+        <Link to={'/'}>
+          <Logo />
+        </Link>
+        {data ? (
           <div className={s.user}>
-            <span>Ivan</span>
-            <img alt={'User avatar'} src={userAvatar} />
+            <Typography as={'button'} variant={'subtitle1'}>
+              {data?.name}
+            </Typography>
+            <Dropdown align={'end'} userData={data} />
           </div>
         ) : (
           <Button variant={'primary'}>Sign In</Button>
         )}
       </div>
-    </div>
+    </header>
   )
 }

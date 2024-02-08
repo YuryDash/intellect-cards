@@ -85,6 +85,8 @@
   justify-content: space-between;
 
   box-sizing: border-box;
+  width: var(--radix-select-trigger-width);
+  max-height: var(--radix-select-content-available-height);
 
   &[data-disabled] {
     cursor: initial;
@@ -134,11 +136,16 @@
   width: 210px;
 }
 
+.fullWidth {
+  width: 100%;
+}
+
 .pagination {
   width: 50px;
 }
 
-.defaultPaddings {
+.defaultPaddings,
+.fullWidthPaddings {
   padding: 6px 12px;
 }
 

@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { CardPage } from '@/components/ui/card'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
@@ -9,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
+
 type ForgotPasswordProps = {
   onSubmit: (data: ForgotPasswordFormSchema) => void
 }
@@ -27,7 +29,7 @@ export const ForgotPassword = ({ onSubmit }: ForgotPasswordProps) => {
   } = useForm<ForgotPasswordFormSchema>({ resolver: zodResolver(ForgotPasswordSchema) })
 
   return (
-    <Card className={s.forgotContainer}>
+    <CardPage className={s.forgotContainer}>
       <Typography className={s.header} variant={'large'}>
         Forgot your password
       </Typography>
@@ -46,10 +48,10 @@ export const ForgotPassword = ({ onSubmit }: ForgotPasswordProps) => {
         <Typography as={'p'} className={s.rememberPassword} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography className={s.trySignIn} variant={'link1'}>
+        <Typography as={Link} className={s.trySignIn} to={'/login'} variant={'link1'}>
           Try logging in
         </Typography>
       </form>
-    </Card>
+    </CardPage>
   )
 }

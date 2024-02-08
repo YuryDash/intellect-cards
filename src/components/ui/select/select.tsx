@@ -22,7 +22,7 @@ export type ItemsType = {
   value: string
 }
 
-export type SelectVariant = 'default' | 'pagination'
+export type SelectVariant = 'default' | 'fullWidth' | 'pagination'
 
 export type SelectProps = {
   className?: string
@@ -43,7 +43,7 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
       label,
       onValueChange,
       open,
-      placeholder = 'Select',
+      placeholder = '100',
       value,
       variant = 'default',
       ...rest
@@ -56,6 +56,7 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
       label: clsx(s.label, disabled && s.disabled),
       placeholder: clsx(s.placeholder),
       trigger: clsx(s.trigger, s[variant], s[`${variant}Paddings`], className),
+      viewport: clsx(s.fullWidth),
     }
 
     return (
@@ -71,10 +72,9 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
             <ArrowMiniDownIcon disabled={disabled} />
           </Icon>
         </Trigger>
-
         <Portal>
           <Content className={classNames.content} position={'popper'} ref={ref}>
-            <Viewport>
+            <Viewport className={classNames.viewport}>
               <Group>
                 {items.map(item => (
                   <SelectItem

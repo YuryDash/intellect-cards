@@ -9,6 +9,7 @@ import s from './pagination.module.scss'
 
 export type PaginationProps = {
   currentPage: number
+  itemsPerPage: (selectValue: string) => void
   onPageChange: (pageNumber: number) => void
   pageSize: number
   siblingsCount?: number
@@ -17,6 +18,7 @@ export type PaginationProps = {
 
 export const Pagination = ({
   currentPage,
+  itemsPerPage,
   onPageChange,
   pageSize,
   siblingsCount = 1,
@@ -38,7 +40,6 @@ export const Pagination = ({
   }
 
   const totalPageCount = Math.ceil(totalCount / pageSize)
-
   const pageNumbers = usePagination({ currentPage, siblingsCount, totalPageCount })
 
   const setNextPage = () => {
@@ -51,6 +52,9 @@ export const Pagination = ({
     if (currentPage !== 1) {
       onPageChange(currentPage - 1)
     }
+  }
+  const onValueChange = (e: string) => {
+    itemsPerPage(e)
   }
 
   return (
@@ -86,7 +90,12 @@ export const Pagination = ({
         <Typography as={'span'} variant={'body2'}>
           Показать
         </Typography>
-        <Select className={classNames.select} variant={'pagination'} {...rest} />
+        <Select
+          className={classNames.select}
+          onValueChange={onValueChange}
+          variant={'pagination'}
+          {...rest}
+        />
         <Typography as={'span'} variant={'body2'}>
           на странице
         </Typography>

@@ -1,11 +1,8 @@
-import { Avatar } from '@/components/ui/avatar'
-import { Dropdown } from '@/components/ui/dropdown/dropdown'
-import { DropdownWithAvatar } from '@/components/ui/dropdown/dropdown-avatar/dropdown-avatar'
-import {
-  DropdownItem,
-  DropdownItemWithIcon,
-} from '@/components/ui/dropdown/dropdown-item/dropdown-items'
-import { EditIcon, LogOutIcon, PlayIcon, ProfileAvatarIcon, ThrashIcon } from '@/icons'
+import { Provider } from 'react-redux'
+import { MemoryRouter } from 'react-router-dom'
+
+import { Dropdown, DropdownProps } from '@/components/ui/dropdown/dropdown'
+import { store } from '@/services/store'
 import { Meta, StoryObj } from '@storybook/react'
 
 const meta = {
@@ -17,39 +14,42 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const WithAvatar: Story = {
-  args: {
-    children: (
-      <>
-        <DropdownItemWithIcon icon={<PlayIcon />} label={'Learn'} />
-        <DropdownItemWithIcon icon={<EditIcon />} label={'Edit'} />
-        <DropdownItemWithIcon icon={<ThrashIcon />} label={'Delete'} />
-      </>
-    ),
-    trigger: (
-      <Avatar
-        image={
-          'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?&w=128&h=128&dpr=2&q=80'
-        }
-      />
-    ),
-  },
+const user = {
+  avatar: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  created: '2024-01-06',
+  email: 'IvanMain@gmail.com',
+  id: '1',
+  isEmailVerified: false,
+  name: 'Ivan Pizdorvan',
+  updated: '2024-01-06',
 }
 
-export const WithoutAvatar: Story = {
-  args: {
-    children: (
-      <>
-        <DropdownItem>
-          <DropdownWithAvatar
-            avatar={'https://ionicframework.com/docs/img/demos/avatar.svg'}
-            mail={'IvanMain@gmail.com'}
-            name={'Ivan'}
-          />
-        </DropdownItem>
-        <DropdownItemWithIcon icon={<ProfileAvatarIcon />} label={'My Profile'} />
-        <DropdownItemWithIcon icon={<LogOutIcon />} label={'Sign Out'} />
-      </>
-    ),
-  },
+export const DropdownWithAvatar: Story = (args: DropdownProps) => {
+  return (
+    <Provider store={store}>
+      <MemoryRouter>
+        <Dropdown {...args} />
+      </MemoryRouter>
+    </Provider>
+  )
+}
+
+export const DropdownWithoutAvatar: Story = (args: DropdownProps) => {
+  return (
+    <Provider store={store}>
+      <MemoryRouter>
+        <Dropdown {...args} />
+      </MemoryRouter>
+    </Provider>
+  )
+}
+
+DropdownWithAvatar.args = {
+  align: 'center',
+  story: true,
+  userData: user,
+}
+DropdownWithoutAvatar.args = {
+  align: 'center',
+  story: true,
 }
