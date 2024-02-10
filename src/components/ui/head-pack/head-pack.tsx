@@ -1,18 +1,17 @@
-import { Button } from '@/components/ui/button'
+import { Modal } from '@/components/ui/modal/modal'
 import { Typography } from '@/components/ui/typography'
 
 import s from './head-pack.module.scss'
 
 type Props = {
-  buttonName: string
   title: string
 }
 
-export const HeadPack = ({ buttonName, title }: Props) => {
+export const HeadPack = ({ title }: Props) => {
   return (
     <div className={s.container}>
       <Typography variant={'h1'}>{title}</Typography>
-      <Button variant={'primary'}>{buttonName}</Button>
+      <Modal />
     </div>
   )
 }

@@ -17,17 +17,14 @@ import { clsx } from 'clsx'
 
 import s from './select.module.scss'
 
-export type ItemsType = {
-  title: string
-  value: string
-}
+export type ItemsType = string[]
 
 export type SelectVariant = 'default' | 'fullWidth' | 'pagination'
 
 export type SelectProps = {
   className?: string
   disabled?: boolean
-  items: ItemsType[]
+  items: string[]
   label?: string
   placeholder?: ReactNode
   variant?: SelectVariant
@@ -43,7 +40,7 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
       label,
       onValueChange,
       open,
-      placeholder = '100',
+      placeholder = '10',
       value,
       variant = 'default',
       ...rest
@@ -67,7 +64,7 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
           </Typography>
         )}
         <Trigger className={classNames.trigger} ref={ref}>
-          <Value className={classNames.placeholder} placeholder={placeholder} />
+          <Value className={classNames.placeholder} placeholder={items[0]} />
           <Icon asChild className={classNames.icon}>
             <ArrowMiniDownIcon disabled={disabled} />
           </Icon>
@@ -77,13 +74,8 @@ export const Select = forwardRef<ElementRef<typeof Root>, SelectProps>(
             <Viewport className={classNames.viewport}>
               <Group>
                 {items.map(item => (
-                  <SelectItem
-                    key={item.value}
-                    title={item.title}
-                    value={item.value}
-                    variant={variant}
-                  >
-                    {item.title}
+                  <SelectItem key={item} title={item} value={item} variant={variant}>
+                    {item}
                   </SelectItem>
                 ))}
               </Group>

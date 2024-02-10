@@ -40,6 +40,7 @@ const ButtonRender = <T extends ElementType = 'button'>(
       <Typography
         as={'span'}
         className={cls.label}
+        style={{ alignItems: 'center', display: 'flex', justifyContent: 'center' }}
         variant={variant === 'link' ? 'subtitle1' : 'subtitle2'}
       >
         {children}

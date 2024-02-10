@@ -20,6 +20,8 @@ export type Deck = {
   userId: string
 }
 
+export type ResponseGetDeckById = Omit<Deck, 'author' | 'rating' | 'shots'>
+
 export type Pagination = {
   currentPage: number
   itemsPerPage: number
@@ -49,7 +51,7 @@ export type GetDeckByIdArgs = {
   name?: string
 }
 
-export type ResponseFriendCard = {
+export type ResponseGetDeckCardsById = {
   items: ResponseFriendCardItems[]
   pagination: Pagination
 }
@@ -68,4 +70,19 @@ export type ResponseFriendCardItems = {
   shots: number
   updated: string
   userId: string
+}
+
+export type GetDeckCardsByIdArgs = {
+  answer?: string
+  currentPage?: number
+  id?: string
+  itemsPerPage?: number
+  orderBy?: string
+  question?: string
+}
+
+export type SubmitGradeArgs = {
+  cardId: string
+  grade: number
+  id: string
 }

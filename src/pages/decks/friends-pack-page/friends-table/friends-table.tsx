@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom'
-
 import {
   Column,
   Sort,
@@ -9,6 +7,7 @@ import {
   TableRow,
 } from '@/components/packs/pack-table'
 import { HeaderTable } from '@/components/packs/pack-table/header-table'
+import { Rating } from '@/components/ui/rating/rating'
 import { maxLengthStr } from '@/helpers/maxLengthStr'
 import { ResponseFriendCardItems } from '@/services/decks/decks.types'
 
@@ -34,15 +33,16 @@ const columns: Column[] = [
   },
 ]
 
-type FrendTableProps = {
+type FriendTableProps = {
   cards?: ResponseFriendCardItems[]
   onSort?: (sort: Sort) => void
   sort: Sort
 }
 
-export const FriendsTable = (props: FrendTableProps) => {
+export const FriendsTable = (props: FriendTableProps) => {
   const { cards, onSort, sort } = props
 
+  //to={`/card/${item.deckId}`}
   return (
     <div className={s.container}>
       <Table className={s.table}>
@@ -51,20 +51,22 @@ export const FriendsTable = (props: FrendTableProps) => {
           {cards?.map(item => (
             <TableRow key={item.id}>
               <TableDataCell className={`${s.tdc} ${s.unselectable} `}>
-                <Link className={s.tdcImg} to={`/card/${item.deckId}`}>
+                <div className={s.tdcImg}>
                   {item.questionImg && (
                     <img alt={'pack image.'} className={s.packImage} src={item.questionImg} />
                   )}
                   <span className={onlyTable.linkName}>{maxLengthStr(item.question, 25)}</span>
-                </Link>
+                </div>
               </TableDataCell>
               <TableDataCell className={s.tdc}>
-                <div>{item.answer}</div>
+                <div>{maxLengthStr(item.answer, 25)}</div>
               </TableDataCell>
               <TableDataCell className={s.tdc}>
                 {new Date(item.updated).toLocaleDateString()}
               </TableDataCell>
-              <TableDataCell className={s.tdc}>* * * * *</TableDataCell>
+              <TableDataCell className={s.tdc}>
+                <Rating ratingValue={item.grade} />
+              </TableDataCell>
             </TableRow>
           ))}
         </TableBody>

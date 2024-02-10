@@ -5,7 +5,6 @@ import { Column, PackTable } from '@/components/packs/pack-table'
 import Loader from '@/components/ui/loader/loader'
 import { Page } from '@/components/ui/page/page'
 import { Pagination } from '@/components/ui/pagination'
-import { ItemsType } from '@/components/ui/select'
 import {
   authorIdSelect,
   maxCardsCountSelector,
@@ -71,14 +70,6 @@ export const PacksListPage = () => {
     return <div>Error</div>
   }
 
-  const items: ItemsType[] = [
-    { title: '5', value: '5' },
-    { title: '10', value: '10' },
-    { title: '15', value: '15' },
-    { title: '20', value: '20' },
-    { title: '25', value: '25' },
-  ]
-
   const itemsPerPage = (selectValue: string) => setItemPerPage(Number(selectValue))
 
   return (
@@ -98,7 +89,7 @@ export const PacksListPage = () => {
       />
       <Pagination
         currentPage={data?.pagination.currentPage ?? 1}
-        items={items}
+        items={['10', '15', '20', '25']}
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPageUse}
         pageSize={data?.pagination.itemsPerPage ?? 10}

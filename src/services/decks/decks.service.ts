@@ -4,9 +4,12 @@ import {
   CreateDeckArgs,
   Deck,
   GetDeckByIdArgs,
+  GetDeckCardsByIdArgs,
   GetDecksArgs,
   GetDesksResponse,
-  ResponseFriendCard,
+  ResponseGetDeckById,
+  ResponseGetDeckCardsById,
+  SubmitGradeArgs,
 } from '@/services/decks/decks.types'
 
 export const decksService = baseApi.injectEndpoints({
@@ -49,18 +52,19 @@ export const decksService = baseApi.injectEndpoints({
         },
       }),
       //getDeckById 'ONLY FOR USSeR NAME'
-      getDeckById: builder.query<Deck, GetDeckByIdArgs>({
+      getDeckById: builder.query<ResponseGetDeckById, GetDeckByIdArgs>({
         providesTags: ['Decks'],
         query: ({ id, ...args }) => {
           return { method: 'GET', params: { ...args }, url: `v1/decks/${id}` }
         },
       }),
-      getDeckCardsById: builder.query<ResponseFriendCard, any>({
+      getDeckCardsById: builder.query<ResponseGetDeckCardsById, GetDeckCardsByIdArgs>({
         providesTags: ['Decks', 'Cards'],
         query: ({ id, ...args }) => {
           return { method: 'GET', params: { ...args }, url: `v1/decks/${id}/cards` }
         },
       }),
+
       getDecks: builder.query<GetDesksResponse, GetDecksArgs | void>({
         providesTags: ['Decks'],
         query: params => {
@@ -70,6 +74,7 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
+
       getLearnCards: builder.query<Card, { id: string; previousCardId?: string }>({
         providesTags: ['Learn'],
         query: params => {
@@ -78,8 +83,9 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      submitGrade: builder.mutation<void, { cardId: string; grade: number; id: string }>({
-        invalidatesTags: ['Learn'],
+
+      submitGrade: builder.mutation<void, SubmitGradeArgs>({
+        invalidatesTags: ['Learn', 'Decks'],
         query: ({ id, ...body }) => {
           return {
             body,
