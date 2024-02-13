@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
+import { HeadPack } from '@/components/packs/head-pack/head-pack'
 import { Button } from '@/components/ui/button'
-import { HeadPack } from '@/components/ui/head-pack/head-pack'
 import { Slider } from '@/components/ui/slider'
 import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { TextField } from '@/components/ui/text-field'
@@ -73,7 +73,7 @@ export function PackFilters(props: PackFiltersPropsType) {
 
   return (
     <div className={s.container}>
-      <HeadPack buttonName={'Add New Pack'} title={'Decks list'} />
+      <HeadPack title={'Decks list'} />
 
       <div className={s.filtersBody}>
         <TextField

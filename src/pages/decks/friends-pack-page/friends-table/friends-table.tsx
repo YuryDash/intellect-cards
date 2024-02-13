@@ -42,7 +42,6 @@ type FriendTableProps = {
 export const FriendsTable = (props: FriendTableProps) => {
   const { cards, onSort, sort } = props
 
-  //to={`/card/${item.deckId}`}
   return (
     <div className={s.container}>
       <Table className={s.table}>
