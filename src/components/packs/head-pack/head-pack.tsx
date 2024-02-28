@@ -12,7 +12,12 @@ export const HeadPack = ({ title }: Props) => {
   return (
     <div className={s.container}>
       <Typography variant={'h1'}>{title}</Typography>
-      <Modal modalTitle={'Add New Deck'} nameButton={'Add New Pack'}>
+      <Modal
+        itemId={''}
+        modalTitle={'Add New Deck'}
+        nameButton={'Add New Pack'}
+        variant={'addDeck'}
+      >
         <AddNewDeck />
       </Modal>
     </div>

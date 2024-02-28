@@ -87,3 +87,5 @@ export type SubmitGradeArgs = {
   grade: number
   id: string
 }
+
+export type ModalVariant = 'addCards' | 'addDeck' | 'question' | null

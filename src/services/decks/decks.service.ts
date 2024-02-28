@@ -25,7 +25,7 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+      createDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
         query: body => {
           return {
@@ -35,7 +35,8 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      deleteDecks: builder.mutation<Omit<Deck, 'author'>, { id: string }>({
+      deleteDecks: builder.mutation<Omit<Deck, 'author'>, string>({
+        invalidatesTags: ['Decks'],
         query: id => {
           return {
             method: 'DELETE',
@@ -109,6 +110,7 @@ export const decksService = baseApi.injectEndpoints({
 
 export const {
   useCreateDeckMutation,
+  useDeleteDecksMutation,
   useGetCardsQuery,
   useGetDeckByIdQuery,
   useGetDeckCardsByIdQuery,

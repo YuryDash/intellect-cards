@@ -3,39 +3,49 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { openCloseModalSelector } from '@/services/decks/decks.select'
+import { DeleteIcon } from '@/icons'
+import { idtModalSelector, variantModalSelector } from '@/services/decks/decks.select'
 import { setModal } from '@/services/decks/decks.slice'
+import { ModalVariant } from '@/services/decks/decks.types'
 import { useAppSelector } from '@/services/store'
-import { Close, Content, Overlay, Portal, Root, Trigger } from '@radix-ui/react-dialog'
+import { Content, Overlay, Portal, Root, Trigger } from '@radix-ui/react-dialog'
 import { Cross2Icon } from '@radix-ui/react-icons'
 
 import s from './modal.module.scss'
 
 type ModalProps = {
   children: ReactNode
+  itemId: string
   modalTitle: string
   nameButton?: string
+  variant: ModalVariant
 }
 
-export const Modal = ({ children, nameButton }: ModalProps) => {
-  const onOpenCloseModal = useAppSelector(openCloseModalSelector)
+export const Modal = ({ children, itemId, modalTitle, nameButton, variant }: ModalProps) => {
+  const variantModal = useAppSelector(variantModalSelector)
+  const modalIdState = useAppSelector(idtModalSelector)
+
   const dispatch = useDispatch()
   const onChangeModalHandler = () => {
-    dispatch(setModal({ openClose: false }))
+    dispatch(setModal({ modalID: null, variant: null }))
   }
   const onOpen = () => {
-    dispatch(setModal({ openClose: !onOpenCloseModal }))
+    dispatch(setModal({ modalID: itemId, variant: variant }))
   }
 
   return (
-    <Root onOpenChange={onOpen} open={onOpenCloseModal}>
+    <Root onOpenChange={onOpen} open={variantModal === variant && modalIdState === itemId}>
       <Trigger asChild>
-        <Button onClick={onChangeModalHandler} variant={'primary'}>
-          {nameButton}
-        </Button>
+        {variant === 'question' ? (
+          <DeleteIcon />
+        ) : (
+          <Button onClick={onChangeModalHandler} variant={'primary'}>
+            {nameButton}
+          </Button>
+        )}
       </Trigger>
       <Portal>
-        <Overlay className={s.DialogOverlay} />
+        <Overlay className={s.DialogOverlay} onClick={onChangeModalHandler} />
         <Content className={s.DialogContent}>
           <div
             style={{
@@ -45,12 +55,10 @@ export const Modal = ({ children, nameButton }: ModalProps) => {
               margin: '18px 24px',
             }}
           >
-            <Typography variant={'h3'}>Add New Deck</Typography>
-            <Close asChild>
-              <button aria-label={'Close'} className={s.IconButton} onClick={onChangeModalHandler}>
-                <Cross2Icon />
-              </button>
-            </Close>
+            <Typography variant={'h3'}>{modalTitle}</Typography>
+            <button aria-label={'Close'} className={s.IconButton} onClick={onChangeModalHandler}>
+              <Cross2Icon />
+            </button>
           </div>
           <div className={s.underLine}></div>
           {children}

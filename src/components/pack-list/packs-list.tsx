@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Button } from '@/components/ui/button'
 import { CardPage } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import { ItemsType, Select } from '@/components/ui/select'
+import { Select } from '@/components/ui/select'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { CloseIcon } from '@/icons'
@@ -16,19 +16,11 @@ type PackType = {
   deletePack?: boolean
   img?: string
   isPack?: boolean
-  items?: ItemsType[] | undefined
   nameButton: string
   title: string
 }
 
-export const PacksList: FC<PackType> = ({
-  deletePack = false,
-  img,
-  isPack,
-  items,
-  nameButton,
-  title,
-}) => {
+export const PacksList: FC<PackType> = ({ deletePack = false, img, isPack, nameButton, title }) => {
   const classNames = {
     buttonClose: clsx(s.buttonClose),
     container: clsx(s.container),
@@ -58,7 +50,7 @@ export const PacksList: FC<PackType> = ({
       {isPack && <TextField label={'Name Pack'} placeholder={'Name'} />}
       {!isPack && (
         <>
-          <Select className={classNames.select} items={items || []} variant={'fullWidth'} />
+          <Select className={classNames.select} items={['5', '10', '15']} variant={'fullWidth'} />
           {img ? (
             <>
               {!isPack && <Typography variant={'subtitle2'}>Question:</Typography>}

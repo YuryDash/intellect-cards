@@ -5,4 +5,5 @@ export const tabValueSelector = (state: RootState) => state.decks.tabValue
 export const searchQuerySelector = (state: RootState) => state.decks.searchByName
 export const maxCardsCountSelector = (state: RootState) => state.decks.maxCardsCount
 export const minCardsCountSelector = (state: RootState) => state.decks.minCardsCount
-export const openCloseModalSelector = (state: RootState) => state.decks.openClose
+export const variantModalSelector = (state: RootState) => state.decks.modal
+export const idtModalSelector = (state: RootState) => state.decks.modalID

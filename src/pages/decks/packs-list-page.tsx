@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Modal } from '@/components/modal-components/modal/modal'
 import { PackFilters } from '@/components/packs/pack-filters'
 import { Column, PackTable } from '@/components/packs/pack-table'
 import Loader from '@/components/ui/loader/loader'
@@ -95,6 +96,14 @@ export const PacksListPage = () => {
         pageSize={data?.pagination.itemsPerPage ?? 10}
         totalCount={data?.pagination.totalPages ?? 10}
       />
+      <Modal
+        itemId={'123123'}
+        modalTitle={'this is ANOTHER!!!'}
+        nameButton={'ANOTHER'}
+        variant={'addCards'}
+      >
+        <div>ANOTHER</div>
+      </Modal>
     </Page>
   )
 }

@@ -8,7 +8,7 @@ export const App = () => {
   return (
     <Provider store={store}>
       <Router />
-      <ToastContainer autoClose={3000} position={'bottom-left'} theme={'dark'} />
+      <ToastContainer autoClose={3000} limit={5} position={'bottom-left'} theme={'dark'} />
     </Provider>
   )
 }

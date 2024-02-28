@@ -11,12 +11,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const items = [
-  { title: 'Text', value: 'first' },
-  { title: 'Text', value: 'second' },
-  { title: 'Text', value: 'three' },
-]
-
 export const AddPack: Story = {
   args: {
     isPack: true,
@@ -53,7 +47,6 @@ export const DeletePack: Story = {
 
 export const AddNewCard: Story = {
   args: {
-    items: items,
     nameButton: 'Add New Card',
     title: 'Add New Card',
   },
@@ -62,7 +55,6 @@ export const AddNewCard: Story = {
 export const AddCardWithPicture: Story = {
   args: {
     img: picture,
-    items: items,
     nameButton: 'Add New Card',
     title: 'Add New Card',
   },
@@ -70,7 +62,6 @@ export const AddCardWithPicture: Story = {
 
 export const EditCard: Story = {
   args: {
-    items: items,
     nameButton: 'Edit Card',
     title: 'Save Changes',
   },

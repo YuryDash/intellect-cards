@@ -10,7 +10,6 @@ import { TextField } from '@/components/ui/text-field'
 import { PictureIcon } from '@/icons/icon-components/picture'
 import { useCreateDeckMutation } from '@/services/decks/decks.service'
 import { setModal } from '@/services/decks/decks.slice'
-import { CreateDeckArgs } from '@/services/decks/decks.types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { any, boolean, string, z } from 'zod'
 
@@ -44,10 +43,9 @@ export const AddNewDeck = () => {
   })
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [loadingError, setLoadingError] = useState('')
-  const [selectedFile, setSelectedFile] = useState<FormData | null>(null)
+  const [selectedFile, setSelectedFile] = useState<Blob | null>(null)
   const [createDeck, {}] = useCreateDeckMutation()
   const onUploadButtonClick = () => {
-    console.log(fileInputRef)
     if (fileInputRef.current) {
       fileInputRef.current.click()
     }
@@ -55,14 +53,20 @@ export const AddNewDeck = () => {
 
   const dispatch = useDispatch()
   const onCloseCallback = () => {
-    dispatch(setModal({ openClose: false }))
+    dispatch(setModal({ modalID: null, variant: null }))
   }
   const onSubmit = (data: any) => {
-    const sendData: CreateDeckArgs = { ...data, cover: selectedFile }
+    const formData = new FormData()
 
-    createDeck(sendData)
-    toast.success('this is success detka')
-    dispatch(setModal({ openClose: false }))
+    if (selectedFile) {
+      formData.append('cover', selectedFile)
+    }
+    formData.append('name', data.name)
+    formData.append('isPrivate', data.isPrivate)
+    createDeck(formData)
+
+    toast.success(`Deck: "${data.name}" is created`)
+    dispatch(setModal({ modalID: null, variant: null }))
   }
 
   const onAddImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +91,7 @@ export const AddNewDeck = () => {
 
       return
     }
-    const formData = new FormData()
-
-    formData.append('cover', cover)
-    setSelectedFile(formData)
+    setSelectedFile(cover)
     toast.info(`add new file`)
   }
 
@@ -129,7 +130,11 @@ export const AddNewDeck = () => {
       </div>
 
       <ControlledCheckbox control={control} label={'Private Pack'} name={'isPrivate'} />
-      <ButtonsModalGroup onClose={onCloseCallback} />
+      <ButtonsModalGroup
+        onClose={onCloseCallback}
+        titleCloseButton={'Close'}
+        titleConfirmButton={'Add New Deck'}
+      />
     </form>
   )
 }
