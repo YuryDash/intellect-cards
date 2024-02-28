@@ -131,6 +131,8 @@ export const AddNewDeck = () => {
 
       <ControlledCheckbox control={control} label={'Private Pack'} name={'isPrivate'} />
       <ButtonsModalGroup
+        confirm={() => {}}
+        id={'123123'}
         onClose={onCloseCallback}
         titleCloseButton={'Close'}
         titleConfirmButton={'Add New Deck'}

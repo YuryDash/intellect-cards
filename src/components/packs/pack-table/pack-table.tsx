@@ -112,7 +112,7 @@ export const PackTable: FC<PackTableProps> = ({
   const onConfirmDeleteCallback = async (id: string, name: string) => {
     try {
       await deleteDecks(id).unwrap()
-      dispatch(setModal({ variant: null }))
+      dispatch(setModal({ modalID: null, variant: null }))
       toast.success(`deck: ${name} delete was successful`)
     } catch (e) {
       toast.error(`some error try again latter: ${e}`)

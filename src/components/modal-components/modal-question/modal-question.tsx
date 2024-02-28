@@ -12,10 +12,10 @@ type ModalQuestionProps = {
   onConfirmDeleteCallback: (id: string, name: string) => void
 }
 
-export const ModalQuestion = ({ item }: ModalQuestionProps) => {
+export const ModalQuestion = ({ item, onConfirmDeleteCallback }: ModalQuestionProps) => {
   const dispatch = useDispatch()
   const onCloseCallback = () => {
-    dispatch(setModal({ variant: null }))
+    dispatch(setModal({ modalID: null, variant: null }))
   }
 
   return (
@@ -25,6 +25,8 @@ export const ModalQuestion = ({ item }: ModalQuestionProps) => {
         cards will be deleted.
       </Typography>
       <ButtonsModalGroup
+        confirm={id => onConfirmDeleteCallback(id, item.name)}
+        id={item.id}
         onClose={onCloseCallback}
         titleCloseButton={'Close'}
         titleConfirmButton={'Delete Card'}

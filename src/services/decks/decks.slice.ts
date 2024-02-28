@@ -2,6 +2,7 @@ import { ModalVariant } from '@/services/decks/decks.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 export type TabValue = 'allCards' | 'myCards'
+type ModalID = null | string
 const initialState = {
   addDeckName: '',
   authorId: '',
@@ -11,6 +12,7 @@ const initialState = {
   maxCardsCount: 10,
   minCardsCount: 0,
   modal: null as ModalVariant,
+  modalID: null as ModalID,
 
   myCardsPage: {
     currentPage: '1',
@@ -35,8 +37,9 @@ export const decksSlice = createSlice({
       state.minCardsCount = action.payload[0]
       state.maxCardsCount = action.payload[1]
     },
-    setModal: (state, action: PayloadAction<{ variant: ModalVariant }>) => {
+    setModal: (state, action: PayloadAction<{ modalID: null | string; variant: ModalVariant }>) => {
       state.modal = action.payload.variant
+      state.modalID = action.payload.modalID
     },
     setSearchQuery: (state, action: PayloadAction<{ value: string }>) => {
       state.searchByName = action.payload.value
