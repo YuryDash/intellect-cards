@@ -13,21 +13,29 @@ export type TabItemType = {
   value: string
 }
 type TabSwitcherType = {
+  defaultValue?: string
   onValueChange?: (value: TabValue) => void
   tabs: TabItemType[]
+  value?: TabValue
 }
 export const TabSwitcher = (props: TabSwitcherType) => {
-  const { onValueChange, tabs } = props
+  const { defaultValue, onValueChange, tabs, value } = props
 
+  /** !!! TYPE CHANGE IN ROOT onValueChange !!! **/
   return (
-    <Root className={s.root}>
+    <Root
+      className={s.root}
+      defaultValue={defaultValue}
+      onValueChange={onValueChange}
+      value={value}
+    >
       <List aria-label={'tabs'} className={s.list}>
         {tabs.map(tab => (
           <Trigger
             className={s.trigger}
             disabled={tab.disabled}
             key={tab.value}
-            onClick={() => onValueChange && onValueChange(tab.value as TabValue)}
+            // onClick={() => onValueChange && onValueChange(tab.value as TabValue)}
             value={tab.value}
           >
             {tab.label}

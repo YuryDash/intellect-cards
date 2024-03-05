@@ -8,14 +8,13 @@ import { TabSwitcher } from '@/components/ui/tab-switcher'
 import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { DeleteIcon } from '@/icons'
-import { maxCardsCountSelector, minCardsCountSelector } from '@/services/decks/decks.select'
-import { useGetDecksQuery } from '@/services/decks/decks.service'
 import {
-  TabValue,
-  setCardsByAuthor,
-  setCardsCount,
-  setSearchQuery,
-} from '@/services/decks/decks.slice'
+  maxCardsCountSelector,
+  minCardsCountSelector,
+  tabValueSelector,
+} from '@/services/decks/decks.select'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
+import { setCardsByAuthor, setCardsCount, setSearchQuery } from '@/services/decks/decks.slice'
 import { useAppSelector } from '@/services/store'
 
 import s from './pack-filters.module.scss'
@@ -45,6 +44,7 @@ export function PackFilters(props: PackFiltersPropsType) {
   const dispatch = useDispatch()
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
+  const tabValue = useAppSelector(tabValueSelector)
   const { data, status } = useGetDecksQuery()
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export function PackFilters(props: PackFiltersPropsType) {
     }
   }, [data])
 
-  const onSetCardsByAuthor = (tabValue: TabValue) => {
+  const onSetCardsByAuthor = (tabValue: string) => {
     dispatch(setCardsByAuthor({ tabValue }))
   }
 
@@ -73,7 +73,7 @@ export function PackFilters(props: PackFiltersPropsType) {
 
   return (
     <div className={s.container}>
-      <HeadPack title={'Decks list'} />
+      <HeadPack />
 
       <div className={s.filtersBody}>
         <TextField
@@ -85,7 +85,7 @@ export function PackFilters(props: PackFiltersPropsType) {
         />
         <div style={{ padding: '0 25px' }}>
           <Typography variant={'body2'}>{switcherLabel}</Typography>
-          <TabSwitcher onValueChange={onSetCardsByAuthor} tabs={tabs} />
+          <TabSwitcher onValueChange={onSetCardsByAuthor} tabs={tabs} value={tabValue} />
         </div>
         <div>
           <Typography variant={'body2'}>{sliderLabel}</Typography>

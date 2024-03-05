@@ -77,7 +77,6 @@ export const PackTable: FC<PackTableProps> = ({
   const [sort, setSort] = useState<Sort>(null)
   const [deleteDecks, {}] = useDeleteDecksMutation()
   const dispatch = useDispatch()
-
   const filteredDecks = decks?.items
     ?.filter(
       item =>
@@ -86,7 +85,7 @@ export const PackTable: FC<PackTableProps> = ({
     )
     .filter(item => item.cardsCount >= minCardsCount || item.cardsCount >= maxCardsCount)
 
-  const sortedDecks = filteredDecks /*?.sort((a, b) => {
+  const sortedDecks = filteredDecks?.sort((a, b) => {
     const aValue = a[sort?.key as keyof typeof a]
     const bValue = b[sort?.key as keyof typeof b]
 
@@ -107,7 +106,7 @@ export const PackTable: FC<PackTableProps> = ({
     }
 
     return 0
-  })*/
+  })
 
   const onConfirmDeleteCallback = async (id: string, name: string) => {
     try {
@@ -125,9 +124,7 @@ export const PackTable: FC<PackTableProps> = ({
         <HeaderTable columns={columns} onSort={setSort} sort={sort} />
         <TableBody>
           {sortedDecks?.map(item => {
-            // const confirmCallback = (item: Deck) => {
-            //   onConfirmDeleteCallback(item.id)
-            // }
+            // console.log(item.author.id === authorID)
 
             return (
               <TableRow key={item.id}>
@@ -146,15 +143,9 @@ export const PackTable: FC<PackTableProps> = ({
                 <TableDataCell className={s.tdc}>{maxLengthStr(item.author.name)}</TableDataCell>
                 <TableDataCell className={s.tdc}>
                   <div className={s.tbcIconContainer}>
-                    {item.cardsCount ? (
-                      <Link className={s.link} to={`/friend-pack/${item.id}`}>
-                        <PlayIcon />
-                      </Link>
-                    ) : (
-                      <div className={s.link} onClick={() => toast.warning('Deck is empty')}>
-                        <PlayIcon />
-                      </div>
-                    )}
+                    <Link className={s.link} to={`/friend-pack/${item.id}`}>
+                      <PlayIcon />
+                    </Link>
                     {tabValue === 'myCards' && (
                       <Link className={s.link} to={''}>
                         <EditIcon />

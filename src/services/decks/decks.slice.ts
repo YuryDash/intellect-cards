@@ -20,7 +20,7 @@ const initialState = {
   },
   orderBy: 'updated-desc',
   searchByName: '',
-  tabValue: 'allCards',
+  tabValue: 'allCards' as TabValue,
 }
 
 export const decksSlice = createSlice({
