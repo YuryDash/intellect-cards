@@ -1,6 +1,10 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
+import { AddNewCard } from '@/components/modal-components/add-new-card/add-new-card'
+import { Modal } from '@/components/modal-components/modal/modal'
 import { Sort } from '@/components/packs/pack-table'
 import { BreadCrumbs } from '@/components/ui/bread-crumbs'
 import { Button } from '@/components/ui/button'
@@ -11,7 +15,11 @@ import { TextField } from '@/components/ui/text-field'
 import { Typography } from '@/components/ui/typography'
 import { EmptyDeck } from '@/pages/decks/empty-decks/empty-deck'
 import { FriendsTable } from '@/pages/decks/friends-pack-page/friends-table/friends-table'
+import { useDeleteCardMutation } from '@/services/cards/cards.service'
+import { authorIdSelect, searchQuerySelector } from '@/services/decks/decks.select'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services/decks/decks.service'
+import { setModal, setSearchQuery } from '@/services/decks/decks.slice'
+import { useAppSelector } from '@/services/store'
 
 import s from './friends-pack.module.scss'
 
@@ -20,7 +28,7 @@ export function FriendsPack() {
   const [itemsPerPage, setItemsPerPage] = useState(5)
   const [currentPageUse, setCurrentPageUse] = useState(1)
   const [sort, setSort] = useState<Sort>(null)
-
+  const selectUserId = useAppSelector(authorIdSelect)
   const { data: friendsDeck, error: errorDeckById, isLoading } = useGetDeckByIdQuery({ id })
   const {
     data,
@@ -31,8 +39,10 @@ export function FriendsPack() {
     id,
     itemsPerPage,
   })
+  const [deleteCard] = useDeleteCardMutation()
 
-  console.log(friendsDeck)
+  const dispatch = useDispatch()
+  const searchQuery = useAppSelector(searchQuerySelector)
 
   if (isLoading || cardsLoading) {
     return <Loader />
@@ -44,16 +54,37 @@ export function FriendsPack() {
     return <div>Error</div>
   }
 
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchQuery({ value: event.target.value }))
+  }
+
   const itemsPerPageCallback = (selectValue: string) => setItemsPerPage(Number(selectValue))
 
   if (!friendsDeck?.cardsCount) {
     return (
       <EmptyDeck
+        deckId={friendsDeck?.id || 'nu'}
         deckName={friendsDeck?.name || 'Deck'}
         id={friendsDeck?.userId || ''}
-        isMyDeck={false}
       />
     )
+  }
+
+  const filteredDecks = data?.items.filter(item => {
+    return (
+      item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.answer.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  })
+
+  const onConfirmDeleteCallback = async (id: string, name: string) => {
+    try {
+      await deleteCard(id).unwrap()
+      dispatch(setModal({ modalID: null, variant: null }))
+      toast.success(`Card: ${name} delete was successful`)
+    } catch (e) {
+      toast.error(`some error try again latter: ${e}`)
+    }
   }
 
   return (
@@ -62,17 +93,39 @@ export function FriendsPack() {
       <Page>
         <div className={s.header}>
           <Typography variant={'h1'}>{friendsDeck?.name || 'Unnamed Deck'}</Typography>
-          <Button
-            as={Link}
-            style={{ display: 'flex', justifyContent: 'center' }}
-            to={`/card/${friendsDeck?.id}`}
-            variant={'primary'}
-          >
-            Learn to Pack
-          </Button>
+          {friendsDeck.userId === selectUserId ? (
+            <Modal
+              itemId={''}
+              modalTitle={'Add New Card'}
+              nameButton={'Add New Card'}
+              variant={'addCards'}
+            >
+              <AddNewCard cardId={'123123'} deckId={friendsDeck.id} title={'myTitle'} />
+            </Modal>
+          ) : (
+            <Button
+              as={Link}
+              style={{ display: 'flex', justifyContent: 'center' }}
+              to={`/card/${friendsDeck?.id}`}
+              variant={'primary'}
+            >
+              Learn to Pack
+            </Button>
+          )}
         </div>
-        <TextField placeholder={'search . . .'} type={'search'} />
-        <FriendsTable cards={data?.items} onSort={setSort} sort={sort} />
+        <TextField
+          isModal={false}
+          onChange={handleSearch}
+          placeholder={'input search'}
+          type={'search'}
+          value={searchQuery}
+        />
+        <FriendsTable
+          cards={filteredDecks}
+          onConfirmDeleteCallback={onConfirmDeleteCallback}
+          onSort={setSort}
+          sort={sort}
+        />
         <Pagination
           currentPage={data?.pagination.currentPage ?? 1}
           items={['5', '10', '15']}
@@ -85,14 +138,3 @@ export function FriendsPack() {
     </>
   )
 }
-
-// {
-//   "email": "kachestvoSim@nia.nia",
-//   "name": "Carcosa",
-//   "id": "63505062-1d10-4a46-8911-7a0022e2e7d1",
-// "userId": "63505062-1d10-4a46-8911-7a0022e2e7d1",
-//   "isEmailVerified": false,
-//   "avatar": "https://andrii-flashcards.s3.eu-central-1.amazonaws.com/0d7b57b3-d697-4577-97e5-8dee61d54145-carcosa.png",
-//   "created": "2024-01-19T10:15:17.762Z",
-//   "updated": "2024-02-20T14:17:34.581Z"
-// }

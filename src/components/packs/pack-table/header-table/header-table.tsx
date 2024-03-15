@@ -34,12 +34,13 @@ export const HeaderTable: FC<
   return (
     <TableHeader {...restProps}>
       <TableRow>
-        {columns.map(({ key, title }) => {
+        {columns.map(({ key, size, title }) => {
           return (
             <TableHeaderCell
               className={s.columnHeaderContainer}
               key={key}
               onClick={key !== '' ? handleSort(key) : undefined}
+              style={{ width: size || 'auto' }}
             >
               <div className={s.titleArrowContainer}>
                 <div>{title}</div>

@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -7,27 +7,35 @@ import { ButtonsModalGroup } from '@/components/modal-components/buttons-modal-g
 import { Button } from '@/components/ui/button'
 import { TextField } from '@/components/ui/text-field'
 import { PictureIcon } from '@/icons/icon-components/picture'
-import { useCreateDeckMutation } from '@/services/decks/decks.service'
+import { useCreateCardMutation } from '@/services/decks/decks.service'
 import { setModal } from '@/services/decks/decks.slice'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { any, string, z } from 'zod'
 
 import s from '../add-new-deck/add-new-deck.module.scss'
 
-const newName = string()
-  .min(3, 'Name must contain at least 3 character(s)')
-  .max(30, 'Name must contain at most 30 character(s)')
+const strValidation = (value: 'Answer' | 'Name') => {
+  return string()
+    .min(3, `${value} must contain at least 3 character(s)`)
+    .max(300, `${value} must contain at most 300 character(s)`)
+}
 
 const newCardSchema = z.object({
   coverAnswer: any(),
   coverQuestion: any(),
-  nameAnswer: newName,
-  nameQuestion: newName,
+  nameAnswer: strValidation('Answer'),
+  nameQuestion: strValidation('Name'),
 })
 
 export type AddNewCardFormSchema = z.infer<typeof newCardSchema>
 
-export const AddNewCard = () => {
+type Props = {
+  cardId: string
+  deckId: string
+  title: string
+}
+
+export const AddNewCard = ({ cardId, deckId, title }: Props) => {
   const {
     control,
     formState: { errors },
@@ -42,36 +50,58 @@ export const AddNewCard = () => {
     },
     resolver: zodResolver(newCardSchema),
   })
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  const fileQuestionRef = useRef<HTMLInputElement>(null)
+  const fileAnswerRef = useRef<HTMLInputElement>(null)
   const [loadingError, setLoadingError] = useState('')
   const [selectedFileQuestion, setSelectedFileQuestion] = useState<Blob | null>(null)
   const [selectedFileAnswer, setSelectedFileAnswer] = useState<Blob | null>(null)
-  const [createDeck, {}] = useCreateDeckMutation()
-  const onUploadButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click()
-    }
+  const [createCard] = useCreateCardMutation()
+
+  const onUploadButtonClick = (question: boolean) => {
+    question && fileQuestionRef.current && fileQuestionRef.current.click()
+    !question && fileAnswerRef.current && fileAnswerRef.current.click()
   }
 
   const dispatch = useDispatch()
   const onCloseCallback = () => {
     dispatch(setModal({ modalID: null, variant: null }))
   }
-  const onSubmit = (data: any) => {
-    const formData = new FormData()
 
-    if (selectedFileQuestion) {
-      formData.append('cover', selectedFileQuestion)
-    }
-    if (selectedFileAnswer) {
-      formData.append('cover', selectedFileAnswer)
-    }
-    formData.append('name', data.name)
-    formData.append('isPrivate', data.isPrivate)
-    createDeck(formData)
+  const updateCard = (...args: any) => {
+    return args
+  }
 
-    toast.success(`Deck: "${data.name}" is created`)
-    dispatch(setModal({ modalID: null, variant: null }))
+  const onSubmit: SubmitHandler<AddNewCardFormSchema> = data => {
+    if (title === 'Edit Card') {
+      updateCard({
+        answer: data.nameAnswer,
+        answerImg: !loadingError && data.coverAnswer[0],
+        id: cardId,
+        question: data.nameQuestion,
+        questionImg: !loadingError && data.coverQuestion[0],
+      })
+        .unwrap()
+        .then(() => {
+          toast.success(`Your card has been successfully updated.`)
+        })
+        .catch((e: any) => {
+          toast.error(e.data.message)
+        })
+    } else {
+      createCard({
+        answer: data.nameAnswer,
+        answerImg: selectedFileAnswer,
+        id: deckId,
+        question: data.nameQuestion,
+        questionImg: selectedFileQuestion,
+      })
+        .unwrap()
+        .then(() => {
+          toast.success(`Your card has been successfully created.`)
+          dispatch(setModal({ modalID: null, variant: null }))
+        })
+        .catch(err => toast.error(err))
+    }
   }
 
   const onAddImageHandler = (e: ChangeEvent<HTMLInputElement>, question: boolean) => {
@@ -118,9 +148,23 @@ export const AddNewCard = () => {
         label={'Question'}
         placeholder={'Name'}
       />
+      {selectedFileQuestion && (
+        <div className={s.imgContainerFile}>
+          <img
+            alt={'just question img'}
+            className={s.imgFile}
+            src={selectedFileQuestion ? URL.createObjectURL(selectedFileQuestion) : ''}
+          />
+        </div>
+      )}
 
       <div className={s.buttonMargin}>
-        <Button fullWidth onClick={onUploadButtonClick} type={'button'} variant={'secondary'}>
+        <Button
+          fullWidth
+          onClick={() => onUploadButtonClick(true)}
+          type={'button'}
+          variant={'secondary'}
+        >
           <PictureIcon size={18} />
           <span style={{ marginLeft: '6px' }}>Upload Image</span>
         </Button>
@@ -130,8 +174,8 @@ export const AddNewCard = () => {
           render={({ field }) => (
             <input
               {...field}
-              onChange={e => onAddImageHandler(e, false)}
-              ref={fileInputRef}
+              onChange={e => onAddImageHandler(e, true)}
+              ref={fileQuestionRef}
               style={{ display: 'none' }}
               type={'file'}
             />
@@ -142,12 +186,25 @@ export const AddNewCard = () => {
       <TextField
         errorMessage={errors.nameAnswer?.message}
         {...register('nameAnswer')}
-        label={'Question'}
+        label={'Answer'}
         placeholder={'Name'}
       />
-
+      {selectedFileAnswer && (
+        <div className={s.imgContainerFile}>
+          <img
+            alt={'just question img'}
+            className={s.imgFile}
+            src={selectedFileAnswer ? URL.createObjectURL(selectedFileAnswer) : ''}
+          />
+        </div>
+      )}
       <div className={s.buttonMargin}>
-        <Button fullWidth onClick={onUploadButtonClick} type={'button'} variant={'secondary'}>
+        <Button
+          fullWidth
+          onClick={() => onUploadButtonClick(false)}
+          type={'button'}
+          variant={'secondary'}
+        >
           <PictureIcon size={18} />
           <span style={{ marginLeft: '6px' }}>Upload Image</span>
         </Button>
@@ -157,8 +214,8 @@ export const AddNewCard = () => {
           render={({ field }) => (
             <input
               {...field}
-              onChange={e => onAddImageHandler(e, true)}
-              ref={fileInputRef}
+              onChange={e => onAddImageHandler(e, false)}
+              ref={fileAnswerRef}
               style={{ display: 'none' }}
               type={'file'}
             />

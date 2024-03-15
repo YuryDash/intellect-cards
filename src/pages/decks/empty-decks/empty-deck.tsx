@@ -9,22 +9,23 @@ import { useAppSelector } from '@/services/store'
 import s from './empty-dack.module.scss'
 
 type EmptyDeckProps = {
+  deckId: string
   deckName: string | undefined
   id?: string
 }
 
-export const EmptyDeck = ({ deckName, id }: EmptyDeckProps) => {
+export const EmptyDeck = ({ deckId, deckName, id }: EmptyDeckProps) => {
   const authorID = useAppSelector(authorIdSelect)
   const isMyDeck = authorID === id
 
   return (
     <>
       <BreadCrumbs title={'Back to Decks List'} />
+      <Typography className={s.namePack} variant={'h1'}>
+        {deckName}
+      </Typography>
       <Page>
         <div className={s.emptyDeckWrapper}>
-          <Typography className={s.namePack} variant={'h1'}>
-            {deckName}
-          </Typography>
           {isMyDeck ? (
             <div className={s.textWrapper}>
               <Typography className={s.textWarning} variant={'body1'}>
@@ -41,13 +42,12 @@ export const EmptyDeck = ({ deckName, id }: EmptyDeckProps) => {
           {isMyDeck && (
             <div className={s.modal}>
               <Modal
-                className={s.modal}
                 itemId={''}
                 modalTitle={'Add New Deck'}
                 nameButton={'Add New Card'}
                 variant={'addDeck'}
               >
-                <AddNewCard />
+                <AddNewCard cardId={id} deckId={deckId} title={'myTitle'} />
               </Modal>
             </div>
           )}

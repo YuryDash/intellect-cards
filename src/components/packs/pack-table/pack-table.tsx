@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+import { AddNewDeck } from '@/components/modal-components/add-new-deck/add-new-deck'
 import { Modal } from '@/components/modal-components/modal/modal'
 import { ModalQuestion } from '@/components/modal-components/modal-question/modal-question'
 import { HeaderTable } from '@/components/packs/pack-table/header-table'
 import { maxLengthStr } from '@/helpers/maxLengthStr'
-import { EditIcon, PlayIcon } from '@/icons'
+import { PlayIcon } from '@/icons'
 import { useDeleteDecksMutation } from '@/services/decks/decks.service'
 import { setModal } from '@/services/decks/decks.slice'
 import { GetDesksResponse } from '@/services/decks/decks.types'
@@ -21,6 +22,7 @@ export type Sort = {
 
 export type Column = {
   key: string
+  size?: string
   sortable?: boolean
   title: string
 }
@@ -124,8 +126,6 @@ export const PackTable: FC<PackTableProps> = ({
         <HeaderTable columns={columns} onSort={setSort} sort={sort} />
         <TableBody>
           {sortedDecks?.map(item => {
-            // console.log(item.author.id === authorID)
-
             return (
               <TableRow key={item.id}>
                 <TableDataCell className={`${s.tdc} ${s.unselectable} `}>
@@ -146,10 +146,18 @@ export const PackTable: FC<PackTableProps> = ({
                     <Link className={s.link} to={`/friend-pack/${item.id}`}>
                       <PlayIcon />
                     </Link>
+
                     {tabValue === 'myCards' && (
-                      <Link className={s.link} to={''}>
-                        <EditIcon />
-                      </Link>
+                      <div className={s.link}>
+                        <Modal itemId={item.id} modalTitle={'Change card'} variant={'changeDeck'}>
+                          <AddNewDeck
+                            deckId={item.id}
+                            image={item.cover}
+                            isPrivate={item.isPrivate}
+                            name={item.name}
+                          />
+                        </Modal>
+                      </div>
                     )}
                     {tabValue === 'myCards' && (
                       <div className={s.link}>

@@ -88,4 +88,4 @@ export type SubmitGradeArgs = {
   id: string
 }
 
-export type ModalVariant = 'addCards' | 'addDeck' | 'question' | null
+export type ModalVariant = 'addCards' | 'addDeck' | 'changeDeck' | 'question' | null

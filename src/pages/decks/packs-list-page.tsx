@@ -18,23 +18,28 @@ import { useAppSelector } from '@/services/store'
 export const columns: Column[] = [
   {
     key: 'name',
+    size: '50%',
     title: 'Name',
   },
   {
     key: 'cardsCount',
+    size: '12%',
     title: 'Cards',
   },
   {
     key: 'updated',
+    size: '18%',
     title: 'Last Updated',
   },
   {
     key: 'createdBy',
+    size: '10%',
     sortable: false,
     title: 'Created by',
   },
   {
     key: '',
+    size: '10%',
     sortable: true,
     title: '',
   },
@@ -69,7 +74,6 @@ export const PacksListPage = () => {
 
     return <div>Error</div>
   }
-
   const itemsPerPage = (selectValue: string) => setItemPerPage(Number(selectValue))
 
   return (
@@ -93,7 +97,7 @@ export const PacksListPage = () => {
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPageUse}
         pageSize={data?.pagination.itemsPerPage ?? 10}
-        totalCount={data?.pagination.totalPages ?? 10}
+        totalCount={data?.pagination.totalItems ?? 10}
       />
     </Page>
   )

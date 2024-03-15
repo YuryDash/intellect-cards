@@ -6,6 +6,7 @@
 - [x] TypeScript
 - [x] SASS (syntax SCSS)
 - [x] clsx
+- [x] toasty
 ---
 ### UI Development Tool:
 - [x] Storybook

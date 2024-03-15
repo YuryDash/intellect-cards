@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { DeleteIcon } from '@/icons'
+import { DeleteIcon, EditIcon } from '@/icons'
 import { idtModalSelector, variantModalSelector } from '@/services/decks/decks.select'
 import { setModal } from '@/services/decks/decks.slice'
 import { ModalVariant } from '@/services/decks/decks.types'
@@ -29,20 +29,30 @@ export const Modal = ({ children, itemId, modalTitle, nameButton, variant }: Mod
   const onChangeModalHandler = () => {
     dispatch(setModal({ modalID: null, variant: null }))
   }
-  const onOpen = () => {
-    dispatch(setModal({ modalID: itemId, variant: variant }))
+  const onOpen = (open: any) => {
+    if (open) {
+      dispatch(setModal({ modalID: itemId, variant: variant }))
+    } else {
+      dispatch(setModal({ modalID: null, variant: null }))
+    }
   }
 
   return (
     <Root onOpenChange={onOpen} open={variantModal === variant && modalIdState === itemId}>
       <Trigger asChild>
-        {variant === 'question' ? (
-          <DeleteIcon />
-        ) : (
-          <Button onClick={onChangeModalHandler} variant={'primary'}>
-            {nameButton}
-          </Button>
-        )}
+        {(() => {
+          if (variant === 'question') {
+            return <DeleteIcon />
+          } else if (variant === 'changeDeck') {
+            return <EditIcon /> // Замените на ваш компонент или JSX
+          } else {
+            return (
+              <Button onClick={onChangeModalHandler} variant={'primary'}>
+                {nameButton}
+              </Button>
+            )
+          }
+        })()}
       </Trigger>
       <Portal>
         <Overlay className={s.DialogOverlay} onClick={onChangeModalHandler} />

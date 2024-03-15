@@ -13,12 +13,13 @@ export type Card = {
   userId: string
 }
 
-export type CreateCardsArgs = {
+export type CreateCardArgs = {
   answer: string
-  answerImg?: string
+  answerImg?: Blob | null
   answerVideo?: string
+  id: string
   question: string
-  questionImg?: string
+  questionImg?: Blob | null
   questionVideo?: string
 }
 

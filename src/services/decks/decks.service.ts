@@ -1,7 +1,6 @@
 import { baseApi } from '@/services/base-api'
-import { Card, CreateCardsArgs, GetCardsArgs } from '@/services/cards/cards.type'
+import { Card, CreateCardArgs, GetCardsArgs } from '@/services/cards/cards.type'
 import {
-  CreateDeckArgs,
   Deck,
   GetDeckByIdArgs,
   GetDeckCardsByIdArgs,
@@ -15,16 +14,21 @@ import {
 export const decksService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
-      createCards: builder.mutation<Card, CreateCardsArgs & { id: string }>({
-        invalidatesTags: ['Cards'],
-        query: ({ id, ...body }) => {
-          return {
-            body,
-            method: 'POST',
-            url: `v1/decks/${id}/cards`,
-          }
+      createCard: builder.mutation<Card, CreateCardArgs>({
+        invalidatesTags: ['Decks'],
+        query: ({ id, ...args }) => {
+          const { answer, answerImg, question, questionImg } = args
+          const formData = new FormData()
+
+          answerImg && formData.append('answerImg', answerImg)
+          formData.append('answer', answer)
+          questionImg && formData.append('questionImg', questionImg)
+          formData.append('question', question)
+
+          return { body: formData, method: 'POST', url: `v1/decks/${id}/cards` }
         },
       }),
+
       createDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
         query: body => {
@@ -95,10 +99,11 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      updateDecksById: builder.mutation<Deck, CreateDeckArgs & { id: string }>({
-        query: ({ id, ...body }) => {
+      updateDecksById: builder.mutation<Deck, { formData: FormData; id: string }>({
+        invalidatesTags: ['Decks'],
+        query: ({ formData, id }) => {
           return {
-            body,
+            body: formData,
             method: 'PATCH',
             url: `v1/decks/${id}`,
           }
@@ -109,6 +114,7 @@ export const decksService = baseApi.injectEndpoints({
 })
 
 export const {
+  useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteDecksMutation,
   useGetCardsQuery,

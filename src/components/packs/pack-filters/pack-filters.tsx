@@ -14,7 +14,12 @@ import {
   tabValueSelector,
 } from '@/services/decks/decks.select'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
-import { setCardsByAuthor, setCardsCount, setSearchQuery } from '@/services/decks/decks.slice'
+import {
+  TabValue,
+  setCardsByAuthor,
+  setCardsCount,
+  setSearchQuery,
+} from '@/services/decks/decks.slice'
 import { useAppSelector } from '@/services/store'
 
 import s from './pack-filters.module.scss'
@@ -53,7 +58,7 @@ export function PackFilters(props: PackFiltersPropsType) {
     }
   }, [data])
 
-  const onSetCardsByAuthor = (tabValue: string) => {
+  const onSetCardsByAuthor = (tabValue: TabValue) => {
     dispatch(setCardsByAuthor({ tabValue }))
   }
 
