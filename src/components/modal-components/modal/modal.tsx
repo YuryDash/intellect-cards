@@ -44,7 +44,9 @@ export const Modal = ({ children, itemId, modalTitle, nameButton, variant }: Mod
           if (variant === 'question') {
             return <DeleteIcon />
           } else if (variant === 'changeDeck') {
-            return <EditIcon /> // Замените на ваш компонент или JSX
+            return <EditIcon />
+          } else if (variant === 'deleteInModal') {
+            return <div>hujase talanty</div>
           } else {
             return (
               <Button onClick={onChangeModalHandler} variant={'primary'}>

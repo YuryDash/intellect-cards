@@ -20,7 +20,7 @@ export type Deck = {
   userId: string
 }
 
-export type ResponseGetDeckById = Omit<Deck, 'author' | 'rating' | 'shots'>
+export type ResponseGetDeckById = Omit<Deck, 'rating' | 'shots'>
 
 export type Pagination = {
   currentPage: number
@@ -88,4 +88,10 @@ export type SubmitGradeArgs = {
   id: string
 }
 
-export type ModalVariant = 'addCards' | 'addDeck' | 'changeDeck' | 'question' | null
+export type ModalVariant =
+  | 'addCards'
+  | 'addDeck'
+  | 'changeDeck'
+  | 'deleteInModal'
+  | 'question'
+  | null

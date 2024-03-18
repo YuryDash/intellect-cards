@@ -161,7 +161,7 @@ export const PackTable: FC<PackTableProps> = ({
                     )}
                     {tabValue === 'myCards' && (
                       <div className={s.link}>
-                        <Modal itemId={item.id} modalTitle={'Delete card'} variant={'question'}>
+                        <Modal itemId={item.id} modalTitle={'Delete deck'} variant={'question'}>
                           <ModalQuestion
                             item={item}
                             onConfirmDeleteCallback={onConfirmDeleteCallback}

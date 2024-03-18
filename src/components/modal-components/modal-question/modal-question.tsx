@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux'
 import { ButtonsModalGroup } from '@/components/modal-components/buttons-modal-group/buttons-modal-group'
 import { Typography } from '@/components/ui/typography'
 import { setModal } from '@/services/decks/decks.slice'
-import { Deck, ResponseFriendCardItems } from '@/services/decks/decks.types'
+import { Deck, ResponseFriendCardItems, ResponseGetDeckById } from '@/services/decks/decks.types'
 
 import s from './modal-question.module.scss'
 
 type ModalQuestionProps = {
-  item: Deck | ResponseFriendCardItems
+  item: Deck | ResponseFriendCardItems | ResponseGetDeckById
   onConfirmDeleteCallback: (id: string, name: string) => void
 }
 
@@ -17,6 +17,8 @@ export const ModalQuestion = ({ item, onConfirmDeleteCallback }: ModalQuestionPr
   const onCloseCallback = () => {
     dispatch(setModal({ modalID: null, variant: null }))
   }
+
+  console.log(item)
 
   const itemName = 'name' in item ? item.name : item.question
   const defaultName = 'name' in item ? 'Deck' : 'Card'

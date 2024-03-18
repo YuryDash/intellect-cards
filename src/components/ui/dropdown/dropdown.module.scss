@@ -26,3 +26,10 @@
 
   fill: var(--color-dark-700);
 }
+
+.moreOptionsItem {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
