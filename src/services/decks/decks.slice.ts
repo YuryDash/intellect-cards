@@ -37,6 +37,15 @@ export const decksSlice = createSlice({
       state.minCardsCount = action.payload[0]
       state.maxCardsCount = action.payload[1]
     },
+    setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
+      state.currentPage = action.payload.currentPage
+    },
+    setDeckName: (state, action: PayloadAction<{ name: string }>) => {
+      state.addDeckName = action.payload.name
+    },
+    setEditDeckName: (state, action: PayloadAction<{ name: string }>) => {
+      state.editDeckName = action.payload.name
+    },
     setModal: (state, action: PayloadAction<{ modalID: null | string; variant: ModalVariant }>) => {
       state.modal = action.payload.variant
       state.modalID = action.payload.modalID
@@ -47,5 +56,13 @@ export const decksSlice = createSlice({
   },
 })
 
-export const { setAuthorId, setCardsByAuthor, setCardsCount, setModal, setSearchQuery } =
-  decksSlice.actions
+export const {
+  setAuthorId,
+  setCardsByAuthor,
+  setCardsCount,
+  setCurrentPage,
+  setDeckName,
+  setEditDeckName,
+  setModal,
+  setSearchQuery,
+} = decksSlice.actions

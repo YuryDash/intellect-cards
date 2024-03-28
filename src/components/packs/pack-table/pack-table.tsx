@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { AddNewDeck } from '@/components/modal-components/add-new-deck/add-new-deck'
 import { Modal } from '@/components/modal-components/modal/modal'
 import { ModalQuestion } from '@/components/modal-components/modal-question/modal-question'
 import { HeaderTable } from '@/components/packs/pack-table/header-table'
@@ -149,6 +148,7 @@ export const PackTable: FC<PackTableProps> = ({
 
                     {tabValue === 'myCards' && (
                       <div className={s.link}>
+                        //TODO сравнить pack-table с другим проектом, и заменить все модалки
                         <Modal itemId={item.id} modalTitle={'Change card'} variant={'changeDeck'}>
                           <AddNewDeck
                             deckId={item.id}

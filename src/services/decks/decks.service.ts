@@ -9,6 +9,7 @@ import {
   ResponseGetDeckById,
   ResponseGetDeckCardsById,
   SubmitGradeArgs,
+  UpdateDeckArgs,
 } from '@/services/decks/decks.types'
 
 export const decksService = baseApi.injectEndpoints({
@@ -99,14 +100,18 @@ export const decksService = baseApi.injectEndpoints({
           }
         },
       }),
-      updateDecksById: builder.mutation<Deck, { formData: FormData; id: string }>({
+      updateDecksById: builder.mutation<Deck, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
-        query: ({ formData, id }) => {
-          return {
-            body: formData,
-            method: 'PATCH',
-            url: `v1/decks/${id}`,
-          }
+        query: ({ id, ...args }) => {
+          const formData = new FormData()
+          const isPackPrivate = args.isPrivate ? 'true' : 'false'
+
+          formData.append('name', args.name)
+          formData.append('cover', args.cover)
+          formData.append('isPrivate', isPackPrivate)
+          //return { url: `v1/decks/${id}`, method: 'PATCH', body: { ...args } }
+
+          return { body: formData, formData: true, method: 'PATCH', url: `v1/decks/${id}` }
         },
       }),
     }

@@ -1,58 +1,70 @@
-import { AddNewCard } from '@/components/modal-components/add-new-card/add-new-card'
-import { Modal } from '@/components/modal-components/modal/modal'
+import { CardsModal } from '@/components/modal-components/modal-card/modal-card'
 import { BreadCrumbs } from '@/components/ui/bread-crumbs'
-import { Page } from '@/components/ui/page/page'
+import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { authorIdSelect } from '@/services/decks/decks.select'
-import { useAppSelector } from '@/services/store'
 
-import s from './empty-dack.module.scss'
+import s from './empty-deck.module.scss'
 
 type EmptyDeckProps = {
-  deckId: string
   deckName: string | undefined
   id?: string
+  isLearn?: boolean
+  isModalOpen?: boolean
+  isMyDeck: boolean
+  setIsModalOpen?: (open: boolean) => void
 }
-
-export const EmptyDeck = ({ deckId, deckName, id }: EmptyDeckProps) => {
-  const authorID = useAppSelector(authorIdSelect)
-  const isMyDeck = authorID === id
+export const EmptyDeck = ({
+  deckName,
+  id,
+  isLearn,
+  isModalOpen,
+  isMyDeck,
+  setIsModalOpen,
+}: EmptyDeckProps) => {
+  const onModalOpen = () => {
+    setIsModalOpen && setIsModalOpen(true)
+  }
+  const onSetOpen = (isOpen: boolean) => {
+    setIsModalOpen && setIsModalOpen(isOpen)
+  }
+  const isOpen = isModalOpen || false
 
   return (
-    <>
-      <BreadCrumbs title={'Back to Decks List'} />
-      <Typography className={s.namePack} variant={'h1'}>
+    <div className={s.emptyDeckWrapper}>
+      <BreadCrumbs backTo={'/'} title={'EMPTY_DECK_TSX'} />
+      <Typography className={s.namePack} variant={'large'}>
         {deckName}
       </Typography>
-      <Page>
-        <div className={s.emptyDeckWrapper}>
-          {isMyDeck ? (
-            <div className={s.textWrapper}>
-              <Typography className={s.textWarning} variant={'body1'}>
-                This pack is empty. Click add new card to fill this pack
-              </Typography>
-            </div>
-          ) : (
-            <div className={s.textWrapper}>
-              <Typography className={s.textWarning} variant={'body1'}>
-                This pack is empty.
-              </Typography>
-            </div>
-          )}
-          {isMyDeck && (
-            <div className={s.modal}>
-              <Modal
-                itemId={''}
-                modalTitle={'Add New Deck'}
-                nameButton={'Add New Card'}
-                variant={'addDeck'}
-              >
-                <AddNewCard cardId={id} deckId={deckId} title={'myTitle'} />
-              </Modal>
-            </div>
+      {isMyDeck ? (
+        <div className={s.textWrapper}>
+          <Typography as={'p'} className={s.textWarning} variant={'body1'}>
+            This pack is empty. Click add new card to fill this pack
+          </Typography>
+          <Button onClick={onModalOpen}>
+            <Typography as={'h4'} variant={'subtitle2'}>
+              Add New Card
+            </Typography>
+          </Button>
+        </div>
+      ) : (
+        <div className={s.textWrapper}>
+          <Typography as={'p'} className={s.textWarning} variant={'body1'}>
+            This pack is empty.
+          </Typography>
+          {isLearn && (
+            <Typography as={'p'} className={s.textWarning} variant={'body1'}>
+              There is nothing to learn
+            </Typography>
           )}
         </div>
-      </Page>
-    </>
+      )}
+      <CardsModal
+        buttonTitle={'Add New Card'}
+        id={id}
+        isModalOpen={isOpen}
+        setIsModalOpen={open => onSetOpen(open)}
+        title={'Add New Card'}
+      />
+    </div>
   )
 }

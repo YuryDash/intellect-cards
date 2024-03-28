@@ -1,81 +1,82 @@
 import { ReactNode } from 'react'
-import { useDispatch } from 'react-redux'
 
-import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
-import { DeleteIcon, EditIcon } from '@/icons'
-import { idtModalSelector, variantModalSelector } from '@/services/decks/decks.select'
-import { setModal } from '@/services/decks/decks.slice'
-import { ModalVariant } from '@/services/decks/decks.types'
-import { useAppSelector } from '@/services/store'
-import { Content, Overlay, Portal, Root, Trigger } from '@radix-ui/react-dialog'
+import * as DialogRadixUI from '@radix-ui/react-dialog'
 import { Cross2Icon } from '@radix-ui/react-icons'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import s from './modal.module.scss'
 
 type ModalProps = {
   children: ReactNode
-  itemId: string
-  modalTitle: string
-  nameButton?: string
-  variant: ModalVariant
+  isOpen: boolean
+  onClose?: (value: boolean) => void
+  showCloseButton?: boolean
+  title?: string
 }
 
-export const Modal = ({ children, itemId, modalTitle, nameButton, variant }: ModalProps) => {
-  const variantModal = useAppSelector(variantModalSelector)
-  const modalIdState = useAppSelector(idtModalSelector)
+const dropIn = {
+  exit: {
+    opacity: 0,
+    y: '100vh',
+  },
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      damping: 25,
+      duration: 0.1,
+      stiffness: 500,
+      type: 'spring',
+    },
+  },
+}
 
-  const dispatch = useDispatch()
-  const onChangeModalHandler = () => {
-    dispatch(setModal({ modalID: null, variant: null }))
-  }
-  const onOpen = (open: any) => {
-    if (open) {
-      dispatch(setModal({ modalID: itemId, variant: variant }))
-    } else {
-      dispatch(setModal({ modalID: null, variant: null }))
-    }
+export const Modal = ({ children, isOpen, onClose, showCloseButton, title }: ModalProps) => {
+  const handleModalClose = () => {
+    onClose?.(false)
   }
 
   return (
-    <Root onOpenChange={onOpen} open={variantModal === variant && modalIdState === itemId}>
-      <Trigger asChild>
-        {(() => {
-          if (variant === 'question') {
-            return <DeleteIcon />
-          } else if (variant === 'changeDeck') {
-            return <EditIcon />
-          } else if (variant === 'deleteInModal') {
-            return <div>hujase talanty</div>
-          } else {
-            return (
-              <Button onClick={onChangeModalHandler} variant={'primary'}>
-                {nameButton}
-              </Button>
-            )
-          }
-        })()}
-      </Trigger>
-      <Portal>
-        <Overlay className={s.DialogOverlay} onClick={onChangeModalHandler} />
-        <Content className={s.DialogContent}>
-          <div
-            style={{
-              alignItems: 'center',
-              display: 'flex',
-              justifyContent: 'space-between',
-              margin: '18px 24px',
-            }}
-          >
-            <Typography variant={'h3'}>{modalTitle}</Typography>
-            <button aria-label={'Close'} className={s.IconButton} onClick={onChangeModalHandler}>
-              <Cross2Icon />
-            </button>
-          </div>
-          <div className={s.underLine}></div>
-          {children}
-        </Content>
-      </Portal>
-    </Root>
+    <DialogRadixUI.Root onOpenChange={handleModalClose} open={isOpen}>
+      <AnimatePresence>
+        {isOpen && (
+          <DialogRadixUI.Portal>
+            <DialogRadixUI.Overlay asChild className={s.dialogOverlay}>
+              <motion.div
+                animate={{ opacity: 1 }}
+                className={s.overlay}
+                exit={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
+                onClick={handleModalClose}
+              />
+            </DialogRadixUI.Overlay>
+            <DialogRadixUI.Content className={s.dialogContent}>
+              <motion.div animate={'visible'} exit={'exit'} initial={'hidden'} variants={dropIn}>
+                <div className={s.modal}>
+                  {showCloseButton && (
+                    <div className={s.titleWrapper}>
+                      <DialogRadixUI.Title className={s.dialogTitle}>
+                        <Typography as={'p'} className={s.title} variant={'h2'}>
+                          {title}
+                        </Typography>
+                      </DialogRadixUI.Title>
+                      <DialogRadixUI.Close asChild>
+                        <button aria-label={'Close'}>
+                          <Cross2Icon className={s.closeMark} />
+                        </button>
+                      </DialogRadixUI.Close>
+                    </div>
+                  )}
+                  <div className={s.modalContent}>{children}</div>
+                </div>
+              </motion.div>
+            </DialogRadixUI.Content>
+          </DialogRadixUI.Portal>
+        )}
+      </AnimatePresence>
+    </DialogRadixUI.Root>
   )
 }

@@ -1,7 +1,7 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Modal } from '@/components/modal-components/modal/modal'
-import { ModalQuestion } from '@/components/modal-components/modal-question/modal-question'
+import { DeleteItemModal } from '@/components/modal-components/delete-item-modal'
 import {
   Column,
   Sort,
@@ -13,7 +13,7 @@ import {
 import { HeaderTable } from '@/components/packs/pack-table/header-table'
 import { Rating } from '@/components/ui/rating/rating'
 import { maxLengthStr } from '@/helpers/maxLengthStr'
-import { EditIcon } from '@/icons'
+import { DeleteIcon, EditIcon } from '@/icons'
 import { tabValueSelector } from '@/services/decks/decks.select'
 import { ResponseFriendCardItems } from '@/services/decks/decks.types'
 import { useAppSelector } from '@/services/store'
@@ -56,8 +56,17 @@ type FriendTableProps = {
 }
 
 export const FriendsTable = (props: FriendTableProps) => {
-  const { cards, onConfirmDeleteCallback, onSort, sort } = props
+  const { cards, onSort, sort } = props
   const tabValue = useAppSelector(tabValueSelector)
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false)
+  const [cardId, setCardId] = useState('')
+  const [question, setQuestion] = useState('')
+
+  const deleteHandler = (cardId: string, question: string) => {
+    setIsModalDeleteOpen(true)
+    setCardId(cardId)
+    setQuestion(question)
+  }
 
   return (
     <div className={s.container}>
@@ -97,14 +106,7 @@ export const FriendsTable = (props: FriendTableProps) => {
                     </Link>
                   )}
                   {tabValue === 'myCards' && (
-                    <div className={s.link}>
-                      <Modal itemId={item.id} modalTitle={'Delete card'} variant={'question'}>
-                        <ModalQuestion
-                          item={item}
-                          onConfirmDeleteCallback={onConfirmDeleteCallback}
-                        />
-                      </Modal>
-                    </div>
+                    <DeleteIcon onClick={() => deleteHandler(item.id, item.question)} />
                   )}
                 </div>
               </TableDataCell>
@@ -112,6 +114,13 @@ export const FriendsTable = (props: FriendTableProps) => {
           ))}
         </TableBody>
       </Table>
+      <DeleteItemModal
+        cardName={question}
+        id={cardId}
+        isModalOpen={isModalDeleteOpen}
+        setIsModalOpen={setIsModalDeleteOpen}
+        title={'Delete Card'}
+      />
     </div>
   )
 }

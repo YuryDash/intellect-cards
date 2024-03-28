@@ -39,6 +39,13 @@ export type GetDecksArgs = {
   orderBy?: string
 }
 
+export type UpdateDeckArgs = {
+  cover: File
+  id?: string
+  isPrivate?: boolean
+  name: string
+}
+
 export type CreateDeckArgs = {
   cover: FormData | null
   isPrivate: boolean

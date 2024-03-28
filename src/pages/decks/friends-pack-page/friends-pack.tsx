@@ -3,9 +3,6 @@ import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
-import { AddNewCard } from '@/components/modal-components/add-new-card/add-new-card'
-import { Modal } from '@/components/modal-components/modal/modal'
-import { ModalQuestion } from '@/components/modal-components/modal-question/modal-question'
 import { Sort } from '@/components/packs/pack-table'
 import { BreadCrumbs } from '@/components/ui/bread-crumbs'
 import { Button } from '@/components/ui/button'
@@ -21,7 +18,6 @@ import { useDeleteCardMutation } from '@/services/cards/cards.service'
 import { authorIdSelect, searchQuerySelector } from '@/services/decks/decks.select'
 import { useGetDeckByIdQuery, useGetDeckCardsByIdQuery } from '@/services/decks/decks.service'
 import { setModal, setSearchQuery } from '@/services/decks/decks.slice'
-import { Deck } from '@/services/decks/decks.types'
 import { useAppSelector } from '@/services/store'
 
 import s from './friends-pack.module.scss'
@@ -98,18 +94,11 @@ export function FriendsPack() {
           {
             <div className={s.dropdownSection}>
               <Typography variant={'h1'}>{friendsDeck?.name || 'Unnamed Deck'}</Typography>
-              <Dropdown item={friendsDeck} />
+              <Dropdown />
             </div>
           }
           {friendsDeck.userId === selectUserId ? (
-            <Modal
-              itemId={''}
-              modalTitle={'Add New Card'}
-              nameButton={'Add New Card'}
-              variant={'addCards'}
-            >
-              <AddNewCard cardId={'123123'} deckId={friendsDeck.id} title={'myTitle'} />
-            </Modal>
+            <div>MODAL TUT!!!!!!!!!!!!!!!!!!!!!</div>
           ) : (
             <Button
               as={Link}
@@ -142,11 +131,6 @@ export function FriendsPack() {
           pageSize={data?.pagination.itemsPerPage ?? 10}
           totalCount={data?.pagination.totalItems ?? 1}
         />
-        <div className={s.link}>
-          <Modal itemId={'123123'} modalTitle={'Delete deck'} variant={'deleteInModal'}>
-            <ModalQuestion item={{} as Deck} onConfirmDeleteCallback={onConfirmDeleteCallback} />
-          </Modal>
-        </div>
       </Page>
     </>
   )
