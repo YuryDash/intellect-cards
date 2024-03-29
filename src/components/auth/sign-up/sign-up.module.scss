@@ -1,0 +1,51 @@
+.signUpWrapper {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  width: 26.25rem;
+  margin: 2.25rem auto 0;
+  padding: 2.06rem 2.25rem 1.81rem;
+
+  .title {
+    align-self: center;
+    margin-bottom: 1.69rem;
+    color: var(--color-light-100);
+  }
+
+  .formWrapper {
+    display: inline-flex;
+    flex-direction: column;
+
+    .name,
+    .email,
+    .password {
+      margin-bottom: 1.5rem;
+    }
+
+    .password.confirm {
+      margin-bottom: 3.75rem;
+    }
+
+    .submit {
+      box-sizing: border-box;
+      margin-bottom: 1.25rem;
+    }
+
+    .haveAccount {
+      align-self: center;
+      margin-bottom: 0.687rem;
+      color: var(--color-light-100);
+    }
+
+    .signUp {
+      cursor: pointer;
+
+      align-self: center;
+
+      font-size: var(--font-size-m);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent-500);
+    }
+  }
+}

@@ -1,0 +1,68 @@
+.myDeckWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 8.5rem;
+
+  .titleAndButton {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.937rem;
+
+    .titleAndDrop {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      .dropButton {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .packImage {
+    width: 10.625rem;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .searchInput {
+    margin-bottom: 1.5rem;
+  }
+
+  .pagination {
+    align-self: flex-end;
+    margin-top: 1.5rem;
+  }
+}
+
+.dropLink {
+  cursor: pointer;
+  display: flex;
+  gap: 0.375rem;
+  text-decoration: none;
+}
+
+.tableData {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  align-items: center;
+
+  .cardImage {
+    width: 7.375rem;
+    height: 3rem;
+    object-fit: cover;
+  }
+
+  .tableText {
+    word-break: break-word;
+  }
+}
+
+.editButtons {
+  display: flex;
+  gap: 0.625rem;
+}

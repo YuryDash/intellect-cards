@@ -1,0 +1,74 @@
+button {
+  all: unset;
+}
+
+.buttonTrigger {
+  cursor: pointer;
+}
+
+.contentWrapper {
+  position: relative;
+
+  min-width: 5rem;
+  min-height: 7.687rem;
+  padding: 0.75rem;
+
+  background: var(--color-dark-700);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 4px;
+
+  .content {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .arrowWrapper {
+    fill: var(--color-dark-700);
+    stroke: var(--color-dark-300);
+    stroke-width: 2px;
+  }
+
+  .arrow {
+    position: absolute;
+    top: -5px;
+    left: calc(50%);
+    transform: rotate(45deg);
+
+    width: 0.75rem;
+    height: 0.75rem;
+
+    background-color: var(--color-dark-700);
+    border: 1px solid var(--color-dark-300);
+    border-top: none;
+    border-left: none;
+  }
+}
+
+.item {
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-s);
+  color: var(--color-light-100);
+  text-decoration: none;
+
+  outline: none;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: var(--color-dark-300);
+}
+
+.separator:last-of-type {
+  display: none;
+}
