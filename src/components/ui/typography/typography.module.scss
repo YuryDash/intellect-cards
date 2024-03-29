@@ -1,77 +1,133 @@
-@use 'src/styles/helpers' as *;
-
-@mixin typography($size: null, $weight: null, $line-height: null) {
+.large {
   margin: 0;
 
-  @if $size {
-    font-size: var(--font-size-#{$size});
-  }
+  font-size: var(--font-size-xxl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+  color: var(--color-light-100);
 
-  @if $weight {
-    font-weight: var(--font-weight-#{$weight});
-  }
-
-  @if $line-height {
-    line-height: var(--line-height-#{$line-height});
-  }
-}
-
-.large {
-  @include typography(xxl, bold);
-
-  line-height: 1.38;
+  background-color: transparent;
 }
 
 .h1 {
-  @include typography($size: xxl, $weight: bold, $line-height: xl);
+  margin: 0;
+
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-l);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .h2 {
-  @include typography($size: l, $weight: bold, $line-height: s);
+  margin: 0;
+
+  font-size: var(--font-size-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .h3 {
-  @include typography($weight: bold);
+  margin: 0;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .body1 {
-  @include typography;
+  margin: 0;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .subtitle1 {
-  @include typography($weight: bold);
+  margin: 0;
+
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .body2 {
-  @include typography($size: s, $line-height: l);
+  margin: 0;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .subtitle2 {
-  @include typography($size: s, $weight: bold, $line-height: l);
+  margin: 0;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .caption {
-  @include typography($size: xs, $line-height: s);
+  margin: 0;
+
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .overline {
-  @include typography($size: xs, $weight: bold, $line-height: s);
-}
+  margin: 0;
 
-%link-shared {
-  cursor: pointer;
-  color: var(--color-info-500);
-  text-decoration: underline;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-s);
+  color: var(--color-light-100);
+
+  background-color: transparent;
 }
 
 .link1 {
-  @extend %link-shared;
+  margin: 0;
 
-  @include typography($size: s, $line-height: l);
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--color-accent-500);
+  text-decoration: underline;
+
+  background-color: transparent;
 }
 
 .link2 {
-  @extend %link-shared;
+  margin: 0;
 
-  @include typography($size: xs, $line-height: s);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+  color: var(--color-accent-500);
+  text-decoration: underline;
+
+  background-color: transparent;
 }

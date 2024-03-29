@@ -1,69 +1,28 @@
-import {
-  ComponentPropsWithoutRef,
-  ElementRef,
-  ElementType,
-  ReactElement,
-  ReactNode,
-  Ref,
-  forwardRef,
-} from 'react'
-
-import { clsx } from 'clsx'
+import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 import s from './typography.module.scss'
-
-type OwnProps<T extends ElementType> = {
+export type TypographyProps<T extends ElementType = 'h1'> = {
   as?: T
   children: ReactNode
+  variant?:
+    | 'large'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'body1'
+    | 'subtitle1'
+    | 'body2'
+    | 'subtitle2'
+    | 'caption'
+    | 'overline'
+    | 'link1'
+    | 'link2'
   className?: string
-  variant?: TypographyVariant
-}
-
-type TypographyProps<T extends ElementType> = OwnProps<T> &
-  Omit<ComponentPropsWithoutRef<T>, keyof OwnProps<T>>
-
-export const TypographyRender = <T extends ElementType = 'p'>(
-  { as, children, className, variant = 'body1', ...props }: TypographyProps<T>,
-  ref: Ref<ElementRef<T>>
+} & ComponentPropsWithoutRef<T>
+export const Typography = <T extends ElementType = 'h1'>(
+  props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>
 ) => {
-  const Component = as || elementsMap[variant]
+  const { variant = 'h1', className, as: Component = 'h1', ...rest } = props
 
-  return (
-    <Component className={clsx(className, s[variant])} ref={ref} {...props}>
-      {children}
-    </Component>
-  )
+  return <Component className={`${s[variant]} ${className}`} {...rest} />
 }
-
-export const Typography = forwardRef(TypographyRender) as <T extends ElementType = 'p'>(
-  props: TypographyProps<T> & { ref?: Ref<ElementRef<T>> }
-) => ReactElement
-
-export const elementsMap: Record<TypographyVariant, string> = {
-  body1: 'p',
-  body2: 'p',
-  caption: 'p',
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  large: 'p',
-  link1: 'a',
-  link2: 'a',
-  overline: 'p',
-  subtitle1: 'h4',
-  subtitle2: 'h5',
-}
-
-export type TypographyVariant =
-  | 'body1'
-  | 'body2'
-  | 'caption'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'large'
-  | 'link1'
-  | 'link2'
-  | 'overline'
-  | 'subtitle1'
-  | 'subtitle2'

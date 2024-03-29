@@ -1,26 +1,21 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
-
-import { Image, Root } from '@radix-ui/react-avatar'
-import { clsx } from 'clsx'
-
 import s from './avatar.module.scss'
 
-export type AvatarProps = {
-  image: string
-  size?: 'large' | 'small'
-} & ComponentPropsWithoutRef<typeof Root>
+type Props = {
+  avatar: string
+  size?: number
+  className?: string
+}
 
-export const Avatar = forwardRef<ElementRef<typeof Root>, AvatarProps>(
-  ({ image, size = 'small', ...rest }, ref) => {
-    const classNames = {
-      image: clsx(s.image),
-      root: clsx(s.root, s[size]),
-    }
-
-    return (
-      <Root className={classNames.root} ref={ref} {...rest}>
-        <Image className={classNames.image} src={image} />
-      </Root>
-    )
-  }
-)
+export const Avatar = ({ avatar, size = 36, className }: Props) => {
+  return (
+    <>
+      <img
+        className={`${s.avatar} ${className}`}
+        src={avatar}
+        alt={'avatar'}
+        width={size}
+        height={size}
+      />
+    </>
+  )
+}

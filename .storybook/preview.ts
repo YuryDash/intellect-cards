@@ -1,8 +1,9 @@
 import type { Preview } from '@storybook/react'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
-import '@/styles/index.scss'
-import { themes } from '@storybook/theming'
+
+import '../src/styles/index.scss'
+import { withRouter } from 'storybook-addon-react-router-v6'
 
 const preview: Preview = {
   parameters: {
@@ -10,22 +11,11 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
+        date: /Date$/,
       },
-    },
-    docs: {
-      theme: themes.dark,
-    },
-    backgrounds: {
-      default: 'dark',
-      values: [
-        {
-          name: 'dark',
-          value: '#000',
-        },
-      ],
     },
   },
 }
 
+export const decorators = [withRouter]
 export default preview

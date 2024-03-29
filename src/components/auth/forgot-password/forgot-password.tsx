@@ -1,19 +1,17 @@
-import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
-
-import { Button } from '@/components/ui/button'
-import { CardPage } from '@/components/ui/card'
-import { TextField } from '@/components/ui/text-field'
-import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import s from './forgot-password.module.scss'
 
+import { Button, Card, ControlledInput, Typography } from '@/components'
+
 type ForgotPasswordProps = {
   onSubmit: (data: ForgotPasswordFormSchema) => void
 }
+
 export type ForgotPasswordFormSchema = z.infer<typeof ForgotPasswordSchema>
 
 const ForgotPasswordSchema = z.object({
@@ -22,36 +20,38 @@ const ForgotPasswordSchema = z.object({
 
 export const ForgotPassword = ({ onSubmit }: ForgotPasswordProps) => {
   const {
+    handleSubmit,
     control,
     formState: { errors },
-    handleSubmit,
-    register,
   } = useForm<ForgotPasswordFormSchema>({ resolver: zodResolver(ForgotPasswordSchema) })
 
   return (
-    <CardPage className={s.forgotContainer}>
-      <Typography className={s.header} variant={'large'}>
-        Forgot your password
+    <Card className={s.forgotWrapper}>
+      <Typography variant={'large'} className={s.title}>
+        Forgot your password?
       </Typography>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
         <DevTool control={control} />
-        <TextField
-          {...register('email')}
-          errorMessage={errors.email?.message}
-          label={'Email'}
+        <ControlledInput
+          className={s.email}
           name={'email'}
+          control={control}
+          label={'Email'}
+          errorMessage={errors.email?.message}
         />
         <Typography as={'p'} className={s.info} variant={'body2'}>
           Enter your email address and we will send you further instructions
         </Typography>
-        <Button type={'submit'}>Send Instructions</Button>
+        <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
+          Send Instructions
+        </Button>
         <Typography as={'p'} className={s.rememberPassword} variant={'body2'}>
           Did you remember your password?
         </Typography>
-        <Typography as={Link} className={s.trySignIn} to={'/login'} variant={'link1'}>
+        <Typography as={Link} to={'/login'} className={s.trySignIn} variant={'link1'}>
           Try logging in
         </Typography>
       </form>
-    </CardPage>
+    </Card>
   )
 }

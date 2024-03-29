@@ -1,31 +1,37 @@
-import { Provider } from 'react-redux'
-import { MemoryRouter } from 'react-router-dom'
+import { useState } from 'react'
 
-import { Slider, SliderPropsType } from '@/components/ui/slider/slider'
-import { store } from '@/services/store'
-import { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from '@storybook/react'
+
+import { Slider } from './'
 
 const meta = {
+  title: 'Components/Slider',
   component: Slider,
   tags: ['autodocs'],
-  title: 'Components/Slider',
+  //argTypes: {},
 } satisfies Meta<typeof Slider>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const SliderStory: Story = (args: SliderPropsType) => {
-  return (
-    <Provider store={store}>
-      <MemoryRouter>
-        <Slider {...args} />
-      </MemoryRouter>
-    </Provider>
-  )
-}
-SliderStory.args = {
-  handleCardsCountChange: () => {},
-  max: 10,
+const commonArgs = {
   min: 0,
-  values: [0, 10],
+  max: 10,
+  value: [2, 8],
+  onChange: () => {},
+}
+
+export const SliderStory: Story = {
+  render: args => {
+    const [sliderValue, setSliderValue] = useState<number[]>(commonArgs.value)
+
+    function onChangeHandler(value: number[]) {
+      setSliderValue(value)
+    }
+
+    return <Slider {...args} value={sliderValue} onChange={onChangeHandler} />
+  },
+  args: {
+    ...commonArgs,
+  },
 }

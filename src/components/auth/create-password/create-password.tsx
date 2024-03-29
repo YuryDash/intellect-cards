@@ -1,17 +1,14 @@
-import { useForm } from 'react-hook-form'
-
-import { Button } from '@/components/ui/button'
-import { CardPage } from '@/components/ui/card'
-import { TextField } from '@/components/ui/text-field'
-import { Typography } from '@/components/ui/typography'
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import z from 'zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import s from './create-password.module.scss'
 
+import { Button, Card, ControlledInput, Typography } from '@/components'
+
 type CreatePasswordProps = {
-  onSubmit: (data: CreatePasswordFormSchema) => Promise<void>
+  onSubmit: (data: CreatePasswordFormSchema) => void
 }
 
 export type CreatePasswordFormSchema = z.infer<typeof CreatePasswordSchema>
@@ -22,30 +19,33 @@ const CreatePasswordSchema = z.object({
 
 export const CreatePassword = ({ onSubmit }: CreatePasswordProps) => {
   const {
+    handleSubmit,
     control,
     formState: { errors },
-    handleSubmit,
-    register,
   } = useForm<CreatePasswordFormSchema>({ resolver: zodResolver(CreatePasswordSchema) })
 
   return (
-    <CardPage className={s.container}>
-      <Typography className={s.header} variant={'large'}>
+    <Card className={s.createWrapper}>
+      <Typography variant={'large'} className={s.title}>
         Create new password
       </Typography>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.formWrapper}>
         <DevTool control={control} />
-        <TextField
-          {...register('password')}
-          errorMessage={errors.password?.message}
-          label={'Password'}
+        <ControlledInput
           type={'password'}
+          className={s.password}
+          name={'password'}
+          control={control}
+          label={'Password'}
+          errorMessage={errors.password?.message}
         />
         <Typography as={'p'} className={s.info} variant={'body2'}>
           Create new password and we will send you further instructions to email
         </Typography>
-        <Button type={'submit'}>Create New Password</Button>
+        <Button type={'submit'} className={s.buttonSubmit} fullWidth={true}>
+          Create New Password
+        </Button>
       </form>
-    </CardPage>
+    </Card>
   )
 }

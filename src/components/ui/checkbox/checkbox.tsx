@@ -1,49 +1,43 @@
-import { forwardRef } from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 
-import { Typography } from '@/components/ui/typography'
-import { Indicator, Root } from '@radix-ui/react-checkbox'
+import * as Checkbox from '@radix-ui/react-checkbox'
 import { CheckIcon } from '@radix-ui/react-icons'
-import { clsx } from 'clsx'
 
 import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
-  checked?: boolean
   className?: string
   disabled?: boolean
+  checked?: boolean
+  onCheckedHandler?: (checked: boolean) => void
   label?: string
-  onCheckedChange?: (checked: boolean) => void
-}
+} & ComponentPropsWithoutRef<typeof Checkbox.Root>
 
-export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
-  ({ checked, className, disabled, label, onCheckedChange }, ref) => {
-    const classNames = {
-      buttonCheckBox: clsx(s.buttonCheckbox, disabled && s.disabled),
-      container: clsx(s.container, className),
-      indicator: clsx(s.indicator),
-      labelWrapper: clsx(s.labelWrapper, disabled && s.disabled),
-      root: clsx(s.root),
-    }
-
-    return (
-      <div className={classNames.container}>
-        <Typography as={'label'} className={classNames.labelWrapper} variant={'body2'}>
-          <div className={classNames.buttonCheckBox} tabIndex={0}>
-            <Root
-              checked={checked}
-              className={classNames.root}
-              disabled={disabled}
-              onCheckedChange={onCheckedChange}
-              ref={ref}
-            >
-              <Indicator className={classNames.indicator}>
-                <CheckIcon />
-              </Indicator>
-            </Root>
-          </div>
-          {label}
-        </Typography>
+export const CheckboxComponent = ({
+  className,
+  disabled,
+  checked = false,
+  onCheckedHandler,
+  label,
+}: CheckboxProps) => {
+  return (
+    <div className={`${s.wrapper} ${className}`}>
+      <div className={`${s.checkboxWrapper} ${disabled ? s.disabled : ''}`}>
+        <Checkbox.Root
+          checked={checked}
+          onCheckedChange={onCheckedHandler}
+          disabled={disabled}
+          className={s.checkbox}
+          id="c1"
+        >
+          <Checkbox.Indicator className={s.checkboxIndicator}>
+            <CheckIcon style={{ width: '22px', height: '22px' }} className={s.checkIcon} />
+          </Checkbox.Indicator>
+        </Checkbox.Root>
       </div>
-    )
-  }
-)
+      <label className={s.label} htmlFor="c1">
+        {label}
+      </label>
+    </div>
+  )
+}

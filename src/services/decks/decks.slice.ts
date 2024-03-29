@@ -1,68 +1,73 @@
-import { ModalVariant } from '@/services/decks/decks.types'
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type TabValue = 'allCards' | 'myCards'
-type ModalID = null | string
 const initialState = {
-  addDeckName: '',
-  authorId: '',
-  currentPage: 1,
-  editDeckName: '',
   itemsPerPage: 10,
-  maxCardsCount: 10,
-  minCardsCount: 0,
-  modal: null as ModalVariant,
-  modalID: null as ModalID,
-
+  currentPage: 1,
+  searchByName: '',
+  authorId: '',
+  tabValue: 'allCards',
+  minCardsCount: '0',
+  maxCardsCount: '100',
+  addDeckName: '',
+  editDeckName: '',
+  orderBy: 'updated-desc',
   myCardsPage: {
     currentPage: '1',
     itemsPerPage: '10',
   },
-  orderBy: 'updated-desc',
-  searchByName: '',
-  tabValue: 'allCards' as TabValue,
 }
 
 export const decksSlice = createSlice({
-  initialState: initialState,
   name: 'decks',
+  initialState: initialState,
   reducers: {
-    setAuthorId: (state, action: PayloadAction<{ authorId: string }>) => {
-      state.authorId = action.payload.authorId
+    setItemsPerPage: (state, action: PayloadAction<number>) => {
+      state.itemsPerPage = action.payload
     },
-    setCardsByAuthor: (state, action: PayloadAction<{ tabValue: TabValue }>) => {
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload
+    },
+    setSearchByName: (state, action: PayloadAction<string>) => {
+      state.searchByName = action.payload
+    },
+    setCardsByAuthor: (
+      state,
+      action: PayloadAction<{ authorId: string; tabValue: 'allCards' | 'myCards' }>
+    ) => {
+      state.authorId = action.payload.authorId
       state.tabValue = action.payload.tabValue
     },
-    setCardsCount: (state, action: PayloadAction<number[]>) => {
-      state.minCardsCount = action.payload[0]
-      state.maxCardsCount = action.payload[1]
+    setMinMaxCardsCount: (state, action: PayloadAction<number[]>) => {
+      state.minCardsCount = action.payload[0].toString()
+      state.maxCardsCount = action.payload[1].toString()
     },
-    setCurrentPage: (state, action: PayloadAction<{ currentPage: number }>) => {
-      state.currentPage = action.payload.currentPage
+    setOrderBy: (state, action: PayloadAction<string>) => {
+      state.orderBy = action.payload
     },
-    setDeckName: (state, action: PayloadAction<{ name: string }>) => {
-      state.addDeckName = action.payload.name
+    setEditDeckName: (state, action: PayloadAction<string>) => {
+      state.editDeckName = action.payload
     },
-    setEditDeckName: (state, action: PayloadAction<{ name: string }>) => {
-      state.editDeckName = action.payload.name
+    setDeckName: (state, action: PayloadAction<string>) => {
+      state.addDeckName = action.payload
     },
-    setModal: (state, action: PayloadAction<{ modalID: null | string; variant: ModalVariant }>) => {
-      state.modal = action.payload.variant
-      state.modalID = action.payload.modalID
+    setCurrentPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.currentPage = action.payload
     },
-    setSearchQuery: (state, action: PayloadAction<{ value: string }>) => {
-      state.searchByName = action.payload.value
+    setItemsPerPageMyDeck: (state, action: PayloadAction<string>) => {
+      state.myCardsPage.itemsPerPage = action.payload
     },
   },
 })
 
 export const {
-  setAuthorId,
-  setCardsByAuthor,
-  setCardsCount,
-  setCurrentPage,
   setDeckName,
   setEditDeckName,
-  setModal,
-  setSearchQuery,
+  setSearchByName,
+  setCardsByAuthor,
+  setMinMaxCardsCount,
+  setCurrentPageMyDeck,
+  setItemsPerPageMyDeck,
+  setCurrentPage,
+  setItemsPerPage,
+  setOrderBy,
 } = decksSlice.actions

@@ -1,23 +1,43 @@
-import { Pagination } from '@/components/ui/pagination/pagination'
-import { Meta, StoryObj } from '@storybook/react'
+import { useState } from 'react'
+
+import type { Meta, StoryObj } from '@storybook/react'
+
+import { Pagination } from '@/components/ui'
 
 const meta = {
+  title: 'Components/Pagination',
   component: Pagination,
   tags: ['autodocs'],
-  title: 'Components/Pagination',
 } satisfies Meta<typeof Pagination>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-const items = [
-  { title: '10', value: '10' },
-  { title: '20', value: '20' },
-  { title: '30', value: '30' },
-  { title: '40', value: '40' },
-  { title: '50', value: '50' },
-]
+export const PaginationStory: Story = {
+  args: {
+    count: 100,
+    page: 5,
+    onChange: () => {},
+  },
+}
 
-export const Default: Story = {
-  args: { currentPage: 1, items, pageSize: 10, totalCount: 94 },
+export const Default = () => {
+  const [page, setPage] = useState(1)
+  const [perPage, setPerPage] = useState(8)
+  const TOTAL_PAGES_COUNT = 10
+
+  return (
+    <div>
+      <Pagination
+        onChange={setPage}
+        count={TOTAL_PAGES_COUNT}
+        page={page}
+        perPage={perPage}
+        perPageOptions={[5, 8, 12, 100]}
+        onPerPageChange={setPerPage}
+      />
+      <div>Current page: {page}</div>
+      <div>Per page: {perPage}</div>
+    </div>
+  )
 }

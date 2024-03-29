@@ -1,55 +1,49 @@
-import { Range, Root, Thumb, Track } from '@radix-ui/react-slider'
+import * as SliderRadixUI from '@radix-ui/react-slider'
 
 import s from './slider.module.scss'
 
-export type SliderPropsType = {
-  handleCardsCountChange: (value: number[]) => void
-  max: number
-  min: number
-  values: number[]
+import { Typography } from '@/components/ui'
+
+type SliderProps = {
+  min?: number
+  max?: number
+  value: number[]
+  step?: number
+  onChange?: (value: number[]) => void
+  label?: string
 }
-
-export const Slider = (props: SliderPropsType) => {
-  const { handleCardsCountChange, max, min, values } = props
-
-  const onValueChangeHandler = (e: number[]) => {
-    handleCardsCountChange(e)
-  }
-
+export const Slider = ({ min, max, value, step = 1, onChange, label }: SliderProps) => {
   return (
-    <div className={s.container} style={{ display: 'flex' }}>
-      <input
-        className={s.sliderIndicator}
-        placeholder={''}
-        readOnly
-        tabIndex={-1}
-        value={values[0]}
-      />
-      <form>
-        <Root
-          className={s.SliderRoot}
-          defaultValue={values}
-          max={max}
+    <div className={s.container}>
+      <Typography variant={'body2'} as={'label'} className={s.label}>
+        {label}
+      </Typography>
+      <div className={s.sliderWrapper}>
+        <div className={s.minMax}>
+          <Typography as={'h3'} variant={'body1'} className={s.value}>
+            {value[0]}
+          </Typography>
+        </div>
+        <SliderRadixUI.Root
+          className={s.root}
+          value={value}
+          onValueChange={onChange}
           min={min}
-          minStepsBetweenThumbs={0}
-          onValueChange={onValueChangeHandler}
-          step={1}
-          value={values}
+          max={max}
+          step={step}
         >
-          <Track className={s.SliderTrack}>
-            <Range className={s.SliderRange} />
-          </Track>
-          <Thumb aria-label={'Volume'} className={s.SliderThumb} tabIndex={1} />
-          <Thumb aria-label={'Volume'} className={s.SliderThumb} tabIndex={1} />
-        </Root>
-      </form>
-      <input
-        className={s.sliderIndicator}
-        placeholder={''}
-        readOnly
-        tabIndex={-1}
-        value={values[1]}
-      />
+          <SliderRadixUI.Track className={s.track}>
+            <SliderRadixUI.Range className={s.range} />
+          </SliderRadixUI.Track>
+          <SliderRadixUI.Thumb className={s.thumb} aria-label="Volume" />
+          <SliderRadixUI.Thumb className={s.thumb} aria-label="Volume" />
+        </SliderRadixUI.Root>
+        <div className={s.minMax}>
+          <Typography as={'h3'} variant={'body1'} className={s.value}>
+            {value[1]}
+          </Typography>
+        </div>
+      </div>
     </div>
   )
 }

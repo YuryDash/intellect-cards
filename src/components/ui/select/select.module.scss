@@ -1,169 +1,99 @@
-.label {
-  width: 65px;
-  height: 24px;
-  margin: 0;
-
-  color: var(--color-dark-100);
-  text-align: start;
-
-  &.disabled {
-    color: var(--color-dark-300);
-  }
+button {
+  all: unset;
 }
 
-.selectBlockIcon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: space-between;
+.label {
+  color: var(--color-dark-100);
+}
 
-  margin-right: 12px;
-
-  &:disabled {
-    color: var(--color-dark-300);
-  }
+.labelDisabled {
+  color: var(--color-dark-300);
 }
 
 .trigger {
-  pointer-events: auto;
-  cursor: pointer;
-
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: space-between;
-
   box-sizing: border-box;
-
+  padding: 6px 12px;
+  font-size: var(--font-size-m);
+  line-height: var(--line-height-m);
+  height: 2.25rem;
+  /*width: 210px;*/
+  width: 100%;
   border: 1px solid var(--color-dark-300);
   border-radius: 2px;
+  background-color: transparent;
+  color: var(--color-light-100);
 
-  &[data-disabled] {
-    cursor: initial;
-    color: var(--color-dark-300);
-    border-color: var(--color-dark-300);
-  }
-
-  &[data-state='open'] {
-    background-color: var(--color-dark-900);
-    border-color: var(--color-dark-100);
-    border-radius: 2px 2px 0 0;
-  }
-
-  .icon {
-    pointer-events: auto;
-    width: 1.6rem;
-    height: 1.6rem;
-  }
-
-  &:focus {
-    border: 1px solid var(--color-info-700);
-    outline: 1px solid var(--color-info-700);
-  }
-
-  &:hover:not([data-disabled]) {
+  &:hover {
     background-color: var(--color-dark-500);
   }
 
-  &[data-state='open'] .icon {
-    transform: rotate(180deg);
+  &:focus {
+    border-radius: 4px;
+    outline: 2px solid var(--color-info-900);
   }
 
-  &[data-disabled] .text {
+  &[data-placeholder] {
+    color: var(--color-light-100);
+  }
+
+  &[data-disabled] {
     color: var(--color-dark-300);
+    pointer-events: none;
   }
 
-  &[data-disabled] svg path {
-    fill: var(--color-dark-300);
+  &[data-disabled]:hover {
+    background-color: transparent;
+  }
+
+  .icon {
+    width: 1rem;
+    height: 1rem;
+    transition: 0.2s ease-in-out;
+  }
+
+  &[data-state='open'] {
+    border-color: var(--color-dark-100);
+    border-radius: 2px 2px 0 0;
+
+    .icon {
+      transform: rotate(180deg);
+    }
   }
 }
 
 .content {
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  box-sizing: border-box;
   width: var(--radix-select-trigger-width);
-  max-height: var(--radix-select-content-available-height);
+  /*overflow: hidden;*/
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 0 0 2px 2px;
 
-  &[data-disabled] {
-    cursor: initial;
-    color: var(--color-dark-300);
-    border-color: var(--color-dark-300);
-  }
-
-  &[data-state='open'] {
-    border-color: var(--color-dark-100);
-    border-top: none;
-    border-radius: 0 0 2px 2px;
-  }
-}
-
-.selectItem {
-  cursor: pointer;
-  user-select: none;
-
-  background-color: var(--color-dark-900);
-  border: 1px solid var(--color-dark-100);
-  border-top: none;
-
-  &:last-child {
-    border-radius: 0 0 2px 2px;
-  }
-
-  &:not(:last-child) {
-    border-bottom: none;
-  }
-
-  &:hover:not([data-disabled]) {
-    background-color: var(--color-accent-900);
-  }
-
-  &:active:not([data-disabled]) {
-    background-color: initial;
-  }
-
-  &[data-highlighted] {
-    color: var(--color-accent-300);
-    background-color: var(--color-accent-900);
-    outline: none;
-  }
-}
-
-.default {
-  width: 210px;
-}
-
-.fullWidth {
-  width: 100%;
-}
-
-.pagination {
-  width: 50px;
-}
-
-.defaultPaddings,
-.fullWidthPaddings {
-  padding: 6px 12px;
-}
-
-.paginationPaddings {
-  padding: 0 2px 0 6px;
-}
-
-.typography {
-  margin: 0;
-  padding: 0;
-}
-
-.placeholder {
-  &:hover {
-    color: var(--color-accent-300);
-  }
-
-  &:active {
+  .item {
+    font-size: var(--font-size-m);
+    line-height: var(--line-height-m);
     color: var(--color-light-100);
+    display: flex;
+    align-items: center;
+    height: 2.25rem;
+    padding: 6px 12px;
+    position: relative;
+    user-select: none;
+    transition: 0.2s ease-out;
+
+    &[data-disabled] {
+      color: var(--color-dark-300);
+      pointer-events: none;
+    }
+
+    &:hover[data-highlighted],
+    &[data-highlighted]:focus-visible,
+    &[data-state='checked'] {
+      outline: none;
+      background-color: var(--color-accent-900);
+      color: var(--color-accent-300);
+    }
   }
 }
