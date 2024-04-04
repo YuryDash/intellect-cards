@@ -150,12 +150,7 @@ export const CardsModal = ({
   const answerSrc = answerPreview || answerImg
 
   return (
-    <Modal
-      isOpen={isModalOpen}
-      onClose={onCloseHandler}
-      showCloseButton={true}
-      title={title}
-    >
+    <Modal isOpen={isModalOpen} onClose={onCloseHandler} showCloseButton={true} title={title}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={s.inputs}>
           <InputWithTypeFile
