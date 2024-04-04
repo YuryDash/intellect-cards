@@ -48,7 +48,7 @@ const publicRoutes: RouteObject[] = [
 
 const privateRoutes: RouteObject[] = [
   {
-    path: '/',
+    path: '/intellect-cards',
     element: <Decks />,
   },
   {
@@ -69,12 +69,30 @@ const privateRoutes: RouteObject[] = [
   },
 ]
 
+// const router = createBrowserRouter([
+//   {
+//     element: <Layout />,
+//     children: [
+//       ...publicRoutes,
+//       { element: <PrivateRoutes />, children: privateRoutes },
+//       {
+//         path: '*',
+//         element: <ErrorPage />,
+//       },
+//     ],
+//   },
+// ])
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       ...publicRoutes,
       { element: <PrivateRoutes />, children: privateRoutes },
+      {
+        path: '/',
+        element: <Navigate to="/intellect-cards" />,
+      },
       {
         path: '*',
         element: <ErrorPage />,

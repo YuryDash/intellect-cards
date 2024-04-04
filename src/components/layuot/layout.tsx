@@ -11,8 +11,7 @@ import { successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation } from '@/services'
 
 export const Layout = () => {
-  //const authData = { isSignedIn: true, name: '', avatar: '', email: '' } //server-data
-  const { data } = useAuthMeQuery() //server-data
+  const { data } = useAuthMeQuery()
   const [logout] = useLogoutMutation()
   const notification = `Bye-bye, ${data?.name || data?.email}`
   const logOutHandler = () => {
@@ -56,7 +55,6 @@ export const Layout = () => {
             </DropDownItem>
             <DropDownItem>
               <Link onClick={handleLinkClick} className={s.link} to={'/my-profile'}>
-                {/* Из-за линка не закрывается дропдаун при переходе на новую страницу   */}
                 <img src={personOutline} alt={'icon'} />
                 <span>My profile</span>
               </Link>

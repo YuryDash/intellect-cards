@@ -15,6 +15,8 @@ import {
   useAuthMeQuery,
   useGetDecksQuery,
 } from '@/services'
+import { TestAvatarIcon } from "@/assets/testAvatarIcon.tsx";
+import { defaultAvatar } from "@/assets";
 
 export const Decks = () => {
   const dispatch = useAppDispatch()
@@ -75,6 +77,12 @@ export const Decks = () => {
         onPerPageChange={onSetItemsPerPage}
         perPageOptions={[10, 20, 30, 50]}
       />
+
+      <div style={{ border: '5px solid red', display:'flex', flexDirection:'column' }}>
+        <div><TestAvatarIcon />: TestAvatarIcon</div>
+        <div><img src={`.${defaultAvatar}`} alt="with dot" />: defaultAvatar with dot</div>
+        <div><img src={defaultAvatar} alt="without dot" />: defaultAvatar without dot</div>
+      </div>
     </div>
   )
 }
