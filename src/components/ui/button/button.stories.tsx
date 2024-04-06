@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Button } from './'
-
-import { enterImg } from '@/assets'
+import { EmailIcon } from '@/assets'
 
 const meta = {
   title: 'Components/Button',
@@ -71,7 +70,7 @@ export const ButtonWithImage: Story = {
     variant: 'primary',
     children: (
       <>
-        <img src={enterImg} alt={'enter'} />
+        <EmailIcon />
         Button With Image
       </>
     ),

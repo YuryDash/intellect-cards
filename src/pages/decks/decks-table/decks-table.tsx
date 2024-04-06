@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import s from './decks-table.module.scss'
 
-import { deleteOutline, editButton, playIcon } from '@/assets'
+import { EditIcon, PlayIcon, ThrashIcon } from '@/assets'
 import {
   Column,
   Sort,
@@ -93,7 +93,7 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                   </Link>
                 </TableData>
 
-                <TableData style={{ width: '21%' }}>
+                <TableData style={{ width: '20%' }}>
                   <Typography as={'p'} variant={'body2'}>
                     {deck.cardsCount}
                   </Typography>
@@ -108,19 +108,19 @@ export const DecksTable = ({ decks, sort, setSort, authDeckAuthorId }: DecksTabl
                     {deck.author.name}
                   </Typography>
                 </TableData>
-                <TableData>
+                <TableData style={{ width: '10%' }}>
                   <div className={s.controlButtons}>
-                    <Link to={`/card/${deck.id}`}>
-                      <img className={s.controlIcon} src={playIcon} alt={'play'} />
+                    <Link to={`/card/${deck.id}`} style={{ color: 'white' }}>
+                      <PlayIcon className={s.controlIcon} />
                     </Link>
 
                     {deck.author.id === authDeckAuthorId && (
                       <>
                         <button onClick={() => editHandler(deck.id, deck.name, deck.cover)}>
-                          <img className={s.controlIcon} src={editButton} alt={'edit'} />
+                          <EditIcon className={s.controlIcon} />
                         </button>
                         <button onClick={() => deleteHandler(deck.id, deck.name)}>
-                          <img className={s.controlIcon} src={deleteOutline} alt={'delete'} />
+                          <ThrashIcon className={s.controlIcon} />
                         </button>
                       </>
                     )}

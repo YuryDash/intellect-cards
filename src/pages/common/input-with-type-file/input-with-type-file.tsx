@@ -1,10 +1,8 @@
 import { ChangeEvent } from 'react'
 
-//import { FieldValues, UseFormRegister } from 'react-hook-form'
-
 import s from './input-with-type-file.module.scss'
 
-import { imageIcon } from '@/assets'
+import { ImageIcon } from '@/assets'
 import { Typography } from '@/components'
 
 type InputProps = {
@@ -28,7 +26,7 @@ export const InputWithTypeFile = ({
       {imageSrc && <img className={s.coverPreview} src={imageSrc} alt={'image'} />}
       <div className={s.inputFileWrapper}>
         <div className={s.changeCover}>
-          <img src={imageIcon} alt={'picture'} />
+          <ImageIcon />
           <Typography as={'span'} variant={'subtitle2'}>
             Change Cover
           </Typography>

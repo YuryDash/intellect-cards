@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import s from './my-deck-page.module.scss'
 
-import { deleteOutline, editButton } from '@/assets'
+import { DeleteIcon, EditIcon } from '@/assets'
 import {
   Column,
   Sort,
@@ -126,13 +126,13 @@ export const MyDeckTable = ({ cards, sort, setSort, id }: MyDeckTableProps) => {
                       )
                     }
                   >
-                    <img src={editButton} alt={'edit'} />
+                    <EditIcon />
                   </button>
                   <button
                     style={{ cursor: 'pointer' }}
                     onClick={() => deleteHandler(card.id, card.question)}
                   >
-                    <img src={deleteOutline} alt={'delete'} />
+                    <DeleteIcon />
                   </button>
                 </div>
               </TableData>

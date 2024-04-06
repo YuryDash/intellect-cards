@@ -1,6 +1,5 @@
 import { toast } from 'react-toastify'
 
-import { defaultAvatar } from '@/assets'
 import { PersonalInfo, PersonalInfoFormSchema } from '@/components'
 import { errorOptions, FetchingSpinner, successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation, useUpdateMeMutation } from '@/services'
@@ -9,7 +8,7 @@ export const Profile = () => {
   const { data } = useAuthMeQuery()
   const name = data?.name || 'Yolo'
   const email = data?.email || 'yolo@superyolo.com'
-  const avatar = data?.avatar || defaultAvatar
+  const avatar = data?.avatar
   const [logOut, { isLoading: isLogouting }] = useLogoutMutation()
   const [updateMe, { isLoading: isUpdating }] = useUpdateMeMutation()
 

@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { Avatar } from './'
-
-import { avatar } from '@/assets'
-
 const meta = {
   title: 'Components/Avatar',
   component: Avatar,
@@ -16,6 +13,6 @@ type Story = StoryObj<typeof meta>
 
 export const AvatarStory: Story = {
   args: {
-    avatar: avatar,
+    avatar: '',
   },
 }

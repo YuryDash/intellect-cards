@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import s from './decks-menu.module.scss'
 
-import { deleteOutline } from '@/assets'
+import { DeleteIcon } from '@/assets'
 import { Button, Input, Slider, TabSwitcher, Typography } from '@/components'
 import { DeckModal } from '@/pages'
 import {
@@ -96,7 +96,7 @@ export const DecksMenu = () => {
           value={[+minCardsCount, +maxCardsCount]}
         />
         <Button onClick={setDefaultValues} variant={'secondary'}>
-          <img src={deleteOutline} alt={'clear'} />
+          <DeleteIcon />
           <Typography as={'h4'} variant={'subtitle2'}>
             Clear filter
           </Typography>

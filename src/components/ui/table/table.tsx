@@ -1,6 +1,7 @@
 import { ComponentProps, ComponentPropsWithoutRef } from 'react'
 
 import s from './table.module.scss'
+import { ArrowMiniDownIcon, ArrowMiniUpIcon } from "@/assets";
 
 type TableProps = ComponentProps<'table'>
 export const Table = ({ className, ...rest }: TableProps) => {
@@ -67,9 +68,12 @@ export const TableHeader = ({
     <TableHead {...restProps}>
       <TableRow>
         {columns.map(({ title, key, sortable = true }) => (
-          <TableHeaderData key={key} onClick={handleSort(key, sortable)}>
-            {title}
-            {sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}
+          <TableHeaderData key={key} onClick={handleSort(key, sortable)} style={{height:'36px', overflow:'hidden'}}>
+            <div style={{ display: "flex", justifyContent: "start", maxHeight:'24px' }}>{title}
+              {sort && sort.key === key &&
+                <span>{sort.direction === "asc" ?
+                  <ArrowMiniUpIcon /> : <ArrowMiniDownIcon />}</span>}</div>
+            {/*{sort && sort.key === key && <span>{sort.direction === 'asc' ? '▲' : '▼'}</span>}*/}
           </TableHeaderData>
         ))}
       </TableRow>

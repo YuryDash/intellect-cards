@@ -10,7 +10,7 @@ export const CheckEmailPage = () => {
   const { data, isLoading } = useAuthMeQuery()
 
   if (isLoading) return <LoadingSpinner />
-  if (data) return <Navigate to={'/'} />
+  if (data) return <Navigate to={'/intellect-cards'} />
 
   return (
     <div className={s.checkEmailWrapper}>

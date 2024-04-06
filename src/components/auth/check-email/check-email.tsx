@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 import s from './check-email.module.scss'
 
-import { checkEmail } from '@/assets'
+import { EmailIcon } from '@/assets'
 import { Button, Card, Typography } from '@/components'
 
 export const CheckEmail = () => {
@@ -11,7 +11,7 @@ export const CheckEmail = () => {
       <Typography variant={'large'} className={s.title}>
         Check Email
       </Typography>
-      <img className={s.checkImg} src={checkEmail} alt={'check email image'} />
+      <EmailIcon />
       <Typography as={'p'} className={s.info} variant={'body2'}>
         We’ve sent an Email with instructions to example@mail.com
       </Typography>

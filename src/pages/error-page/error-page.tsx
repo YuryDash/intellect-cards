@@ -2,13 +2,13 @@ import { Link } from 'react-router-dom'
 
 import s from './error-page.module.scss'
 
-import { errorImg } from '@/assets'
+import { ErrorImg } from '@/assets'
 import { Button, Typography } from '@/components'
 
 export const ErrorPage = () => {
   return (
     <div className={s.errorContainer}>
-      <img className={s.errorImg} src={errorImg} alt={'something-wrong image'} />
+      <ErrorImg className={s.errorImg} />
       <Typography className={s.errorText} as={'div'} variant={'body1'}>
         Sorry! Page not found!
       </Typography>

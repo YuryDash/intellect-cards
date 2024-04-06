@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 
 import s from './my-deck-page.module.scss'
 
-import { buttonForDrop, deleteOutline, editButton, playIcon } from '@/assets'
+import { MoreOptionsIcon, DeleteIcon, EditIcon, PlayIcon } from '@/assets'
 import { useDebounce } from '@/common'
 import {
   Button,
@@ -108,19 +108,19 @@ export const MyDeckPage = () => {
             align={'end'}
             trigger={
               <span className={s.dropButton}>
-                <img src={buttonForDrop} alt={'dropButton'} />
+                <MoreOptionsIcon />
               </span>
             }
           >
             <DropDownItem>
               <Typography className={s.dropLink} as={Link} to={`/card/${id}`} variant={'caption'}>
-                <img src={playIcon} alt={'learn'} />
+                <PlayIcon />
                 Learn
               </Typography>
             </DropDownItem>
             <DropDownItem>
               <button onClick={() => setIsDeckModalOpen(true)} className={s.dropLink}>
-                <img src={editButton} alt={'edit'} />
+                <EditIcon />
                 <Typography as={'p'} variant={'caption'}>
                   Edit
                 </Typography>
@@ -128,7 +128,7 @@ export const MyDeckPage = () => {
             </DropDownItem>
             <DropDownItem>
               <button onClick={deleteHandler} className={s.dropLink}>
-                <img src={deleteOutline} alt={'delete'} />
+                <DeleteIcon />
                 <Typography variant={'caption'}>Delete</Typography>
               </button>
             </DropDownItem>

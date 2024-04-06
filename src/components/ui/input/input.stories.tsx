@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Input } from './'
 
-import { eyeIcon, searchIcon } from '@/assets'
+import { EyeIcon, SearchIcon } from '@/assets'
 
 const meta = {
   title: 'Components/Input',
@@ -36,7 +36,7 @@ export const InputStoryWithEyeIcon: Story = {
   args: {
     label: 'Input',
     placeholder: 'Input with password',
-    inputIcon: `${eyeIcon}`,
+    inputIcon: `${EyeIcon}`,
     type: 'password',
   },
 }
@@ -45,7 +45,7 @@ export const InputStoryWithSearchIcon: Story = {
   args: {
     label: 'Input',
     placeholder: 'Input with search',
-    inputIcon: `${searchIcon}`,
+    inputIcon: `${SearchIcon}`,
     type: 'search',
     value: 'asdasdasd',
   },
@@ -55,7 +55,7 @@ export const InputStoryDisabled: Story = {
   args: {
     label: 'Input',
     placeholder: 'Just Input',
-    inputIcon: `${searchIcon}`,
+    inputIcon: `${SearchIcon}`,
     type: 'text',
     disabled: true,
   },
@@ -72,7 +72,7 @@ export const InputStoryWithSearchIconWithUseState: Story = {
           onChange={e => setText(e.currentTarget.value)}
           onClearClick={() => setText('')}
           type={'search'}
-          inputIcon={searchIcon}
+          inputIcon={'SearchIcon'}
           placeholder={'Input with search'}
         />
       </>

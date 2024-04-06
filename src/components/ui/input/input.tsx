@@ -4,7 +4,7 @@ import { EyeNoneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
 
 import s from './input.module.scss'
 
-import { eyeIcon, xMarkIcon } from '@/assets'
+import { CloseIcon, EyeIcon } from '@/assets'
 import { Typography } from '@/components/ui'
 
 export type InputProps = {
@@ -75,13 +75,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               className={s.inputIcon}
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? <img src={eyeIcon} alt={'InputIcon'} /> : <EyeNoneIcon />}
+              {showPassword ? <EyeIcon /> : <EyeNoneIcon />}
             </button>
           )}
 
           {type === 'search' && value && (
             <button type={'button'} className={s.inputIcon} onClick={cleanTextHandler}>
-              <img src={xMarkIcon} alt={'InputIcon'} />
+              <CloseIcon />
             </button>
           )}
 

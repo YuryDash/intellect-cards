@@ -7,7 +7,7 @@ import { z } from 'zod'
 
 import s from './personal-info.module.scss'
 
-import { defaultAvatar, editButton, logOut } from '@/assets'
+import { UserIcon, EditIcon, LogOutIcon } from '@/assets'
 import { Avatar, Button, Card, Input, Typography } from '@/components'
 
 type PersonalInfoProps = {
@@ -30,7 +30,7 @@ const PersonalInfoSchema = z.object({
 export const PersonalInfo = ({
   onSubmit,
   onChangeAvatar,
-  avatar = defaultAvatar,
+  avatar,
   name,
   email,
   onLogOut,
@@ -88,7 +88,7 @@ export const PersonalInfo = ({
       <Typography variant={'large'} className={s.title}>
         Personal Information
       </Typography>
-      <Avatar avatar={avatar} size={96} className={s.avatar} />
+      {avatar ? <Avatar avatar={avatar} size={96} className={s.avatar} /> : <UserIcon />}
 
       <form onSubmit={handleSubmit(onSubmitHandler)} className={s.formWrapper}>
         <div className={s.changeAvatar}>
@@ -99,7 +99,8 @@ export const PersonalInfo = ({
             className={s.inputFile}
             onChange={onChangeAvatarHandler}
           />
-          <img className={s.addPhotoBtn} src={editButton} alt={'picture'} />
+          {/*<img className={s.addPhotoBtn} src={editButton} alt={'picture'} />*/}
+          <EditIcon className={s.addPhotoBtn} />
         </div>
         <div className={s.errorMessage}>{avatarError}</div>
 
@@ -146,7 +147,7 @@ export const PersonalInfo = ({
               {name}
             </Typography>
             <button onClick={() => setEditMode(true)} className={s.editNameButton}>
-              <img src={editButton} alt="editButton" />
+              <EditIcon />
             </button>
           </div>
           <Typography variant={'body2'} className={s.email}>
@@ -158,7 +159,7 @@ export const PersonalInfo = ({
             type={'submit'}
             className={s.buttonLogOut}
           >
-            <img src={logOut} alt="logOutButton" />
+            <LogOutIcon />
             Logout
           </Button>
         </div>

@@ -1,4 +1,4 @@
-import { starFullIcon, starIcon } from '@/assets'
+import { RatingEmptyStarIcon, RatingFullStarIcon } from '@/assets'
 
 type GradeProps = {
   grade: number
@@ -6,11 +6,15 @@ type GradeProps = {
 export const Grade = ({ grade }: GradeProps) => {
   return (
     <div style={{ display: 'flex', gap: '10px' }}>
-      <img src={grade >= 1 ? starFullIcon : starIcon} alt={'star'} />
-      <img src={grade >= 2 ? starFullIcon : starIcon} alt={'star'} />
-      <img src={grade >= 3 ? starFullIcon : starIcon} alt={'star'} />
-      <img src={grade >= 4 ? starFullIcon : starIcon} alt={'star'} />
-      <img src={grade >= 5 ? starFullIcon : starIcon} alt={'star'} />
+      {grade >= 1 ? <RatingFullStarIcon /> : <RatingEmptyStarIcon />}
+      {grade >= 2 ? <RatingFullStarIcon /> : <RatingEmptyStarIcon />}
+      {grade >= 3 ? <RatingFullStarIcon /> : <RatingEmptyStarIcon />}
+      {grade >= 4 ? <RatingFullStarIcon /> : <RatingEmptyStarIcon />}
+      {grade >= 5 ? <RatingFullStarIcon /> : <RatingEmptyStarIcon />}
+      {/*<img src={grade >= 2 ? starFullIcon : starIcon} alt={'star'} />*/}
+      {/*<img src={grade >= 3 ? starFullIcon : starIcon} alt={'star'} />*/}
+      {/*<img src={grade >= 4 ? starFullIcon : starIcon} alt={'star'} />*/}
+      {/*<img src={grade >= 5 ? starFullIcon : starIcon} alt={'star'} />*/}
     </div>
   )
 }

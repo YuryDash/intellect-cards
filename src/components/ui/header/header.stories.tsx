@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Header } from './'
 
-import { avatar, logo } from '@/assets'
+import { Logo } from '@/assets'
 import { Button } from '@/components/ui'
 import { NameWithAvatar } from '@/components/ui/nameWithAvatar/nameWithAvatar.tsx'
 
@@ -21,7 +21,7 @@ export const HeaderWithButton: Story = {
     isSignedIn: false,
     children: (
       <>
-        <img src={logo} alt="logo" />
+        <Logo />
         <Button variant={'primary'}>Sign In</Button>
       </>
     ),
@@ -33,8 +33,8 @@ export const HeaderWithDropDownMenu: Story = {
     isSignedIn: true,
     children: (
       <>
-        <img src={logo} alt="logo" />
-        <NameWithAvatar name={'Ivan'} avatar={avatar} />
+        <Logo />
+        <NameWithAvatar name={'Ivan'} avatar={'avatar'} />
       </>
     ),
   },

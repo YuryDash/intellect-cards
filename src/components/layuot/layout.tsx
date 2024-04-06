@@ -5,7 +5,9 @@ import { toast } from 'react-toastify'
 
 import s from './layout.module.scss'
 
-import { defaultAvatar, logo, logOut, personOutline } from '@/assets'
+//person
+import { Logo, LogOutIcon, UserIcon } from '@/assets'
+import defaultAvatar from '@/assets/avatarIcon.png'
 import { Avatar, Button, DropDownItem, DropDownMenu, Header, NameWithAvatar } from '@/components'
 import { successOptions } from '@/pages'
 import { useAuthMeQuery, useLogoutMutation } from '@/services'
@@ -35,7 +37,7 @@ export const Layout = () => {
     <>
       <Header>
         <Link to={'/'}>
-          <img src={logo} alt={'logo'} />
+          <Logo />
         </Link>
         {data ? (
           <DropDownMenu
@@ -55,13 +57,13 @@ export const Layout = () => {
             </DropDownItem>
             <DropDownItem>
               <Link onClick={handleLinkClick} className={s.link} to={'/my-profile'}>
-                <img src={personOutline} alt={'icon'} />
+                <UserIcon />
                 <span>My profile</span>
               </Link>
             </DropDownItem>
             <DropDownItem>
               <button onClick={logOutHandler} className={s.link}>
-                <img src={logOut} alt={'icon'} />
+                <LogOutIcon />
                 <span>Sign Out</span>
               </button>
             </DropDownItem>

@@ -1,4 +1,3 @@
-// import { App } from '@/App'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
